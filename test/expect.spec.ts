@@ -2,34 +2,6 @@
 
 import { _ } from "../src/expect";
 
-type expectedSuits<T extends Record<_.checkType, any>> = never;
-
-type suitMap = expectedSuits<{
-    assign: toBeAssignableTo;
-    accept: toAccept;
-    equal: toBeEqualTo;
-    extend: toExtend;
-    extendedBy: toBeExtendedBy;
-    defined: toBeDefined;
-    falsy: toBeFalsy;
-    truthy: toBeTruthy;
-    nullish: toBeNullish;
-    prefixed: toStartWith;
-    suffixed: toEndWith;
-    contains: toContain;
-    includes: arrays;
-    hasKeys: toHaveKeys;
-    hasOnlyKeys: toHaveOnlyKeys;
-    hasValues: toHaveValues;
-    hasOnlyValues: toHaveOnlyValues;
-    returns: toReturn;
-    returnsOnly: toReturnOnly;
-    resolvesTo: toResolveTo;
-    resolvesOnlyTo: toResolveToOnly;
-    arguments: toAcceptArguments;
-    argumentsOnly: toAcceptOnlyArguments;
-}>;
-
 type toBeDefined =
     | _<_.expect<number, _.toBeDefined>>
     | _<_.expect<string, _.toBeDefined>>

@@ -4,7 +4,7 @@
 // TODO: add any/unknown checks
 // TODO: add union checks
 
-import { $ } from "../src/expect-utils";
+import { $ } from "../src/expect";
 
 type suit_assert =
     | "should check that type evaluates to true"
