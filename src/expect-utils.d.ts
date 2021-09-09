@@ -1,4 +1,4 @@
-export namespace $ {
+export declare namespace $ {
     export type falsy = false | "" | 0 | 0n | null | undefined | void;
     export type primitive = string | number | bigint | boolean | symbol | null | undefined;
     export type nullish = null | undefined;
@@ -139,4 +139,6 @@ export namespace $ {
             ? equals<V, A>
             : false
         : false;
+
+    export {};
 }

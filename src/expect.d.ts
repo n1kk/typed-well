@@ -1,14 +1,13 @@
-import { $ } from "./expect-utils";
+import { $ as utils } from "./expect-utils";
 
-export type _<check extends true> = never;
+export declare type _<check extends true> = never;
 
 // TODO: everything is public in d.ts but not in .ts, convert d.ts to .ts before publishing
 
 // TODO: figure out how to detect a union type
+export import $ = utils;
 
-export namespace _ {
-    export type _<condition extends true> = never;
-
+export declare namespace _ {
     export type pass<condition extends true> = never;
     export type fail<condition extends false> = never;
 
@@ -82,7 +81,6 @@ export namespace _ {
 
     // comparison
     export type toAccept<T> = check<T, "accept">;
-    export type toAcceptOnly<T> = check<T, "accept">;
     export type toBeAssignableTo<T> = check<T, "assign">;
     export type toExtend<T> = check<T, "extend">;
     export type toBeExtendedBy<T> = check<T, "extendedBy">; // reverse toExtend
@@ -173,4 +171,6 @@ export namespace _ {
     > = $.if_else<negativeCheck, $.not<result>, result>;
 
     export type expect<given, payload extends check<any, checkType>> = _expect<given, payload>;
+
+    export {};
 }
