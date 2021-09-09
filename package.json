@@ -7,6 +7,9 @@
     "test": "tsc",
     "prepublishOnly": "pnpm test"
   },
+  "files": [
+    "src/**"
+  ],
   "author": "n1kk",
   "license": "MIT",
   "devDependencies": {
