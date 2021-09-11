@@ -1,6 +1,12 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { _ } from "../src/expect";
+import {
+    EmptyClass,
+    ExtendedFunction,
+    InvocableInterface,
+    NewableInterface,
+} from "./expect-utils.spec";
 
 type toBeDefined =
     | _<_.expect<number, _.toBeDefined>>
@@ -53,6 +59,51 @@ type toBeNullish =
     | _<_.expect<"", _.not.toBeNullish>>
     | _<_.expect<number, _.not.toBeNullish>>
     | _<_.expect<string, _.not.toBeNullish>>;
+
+type toBePrimitive =
+    | _<_.expect<1, _.toBePrimitive>>
+    | _<_.expect<"a", _.toBePrimitive>>
+    | _<_.expect<true, _.toBePrimitive>>
+    | _<_.expect<false, _.toBePrimitive>>
+    | _<_.expect<number, _.toBePrimitive>>
+    | _<_.expect<string, _.toBePrimitive>>
+    | _<_.expect<null, _.toBePrimitive>>
+    | _<_.expect<undefined, _.toBePrimitive>>
+    | _<_.expect<bigint, _.toBePrimitive>>
+    | _<_.expect<symbol, _.toBePrimitive>>
+    | _<_.expect<void, _.not.toBePrimitive>>
+    | _<_.expect<object, _.not.toBePrimitive>>
+    | _<_.expect<[], _.not.toBePrimitive>>
+    | _<_.expect<{ a: number }, _.not.toBePrimitive>>
+    | _<_.expect<{}, _.not.toBePrimitive>>;
+
+type toBeInvocable =
+    | _<_.expect<() => void, _.toBeInvocable>>
+    | _<_.expect<Function, _.toBeInvocable>>
+    | _<_.expect<typeof console.log, _.toBeInvocable>>
+    | _<_.expect<ExtendedFunction, _.toBeInvocable>>
+    | _<_.expect<typeof ExtendedFunction, _.toBeInvocable>>
+    | _<_.expect<InvocableInterface, _.toBeInvocable>>
+    | _<_.expect<NewableInterface, _.toBeInvocable>>
+    | _<_.expect<void, _.not.toBeInvocable>>
+    | _<_.expect<object, _.not.toBeInvocable>>
+    | _<_.expect<number, _.not.toBeInvocable>>
+    | _<_.expect<number | ExtendedFunction, _.not.toBeInvocable>>
+    | _<_.expect<number | (() => void), _.not.toBeInvocable>>
+    | _<_.expect<object | InvocableInterface, _.not.toBeInvocable>>
+    | _<_.expect<unknown, _.not.toBeInvocable>>;
+
+type suit_isNewable =
+    | "can a given type be called with new keyword"
+    | _<_.expect<typeof EmptyClass, _.toBeNewable>>
+    | _<_.expect<typeof ExtendedFunction, _.toBeNewable>>
+    | _<_.expect<typeof Function, _.toBeNewable>>
+    | _<_.expect<{ new (arg: number): boolean }, _.toBeNewable>>
+    | _<_.expect<Function, _.not.toBeNewable>>
+    | _<_.expect<() => object, _.not.toBeNewable>>
+    | _<_.expect<{ (arg: number): boolean }, _.not.toBeNewable>>
+    | _<_.expect<object, _.not.toBeNewable>>
+    | _<_.expect<unknown, _.not.toBeNewable>>;
 
 type toStartWith =
     | _<_.expect<"asd", _.toStartWith<"a">>>
@@ -228,7 +279,12 @@ type toHaveValues =
     | _<_.expect<{ a: number }, _.not.toHaveFieldsThatAccept<unknown>>>
     | _<_.expect<{ c: number; b: string }, _.not.toHaveFieldsThatAccept<boolean>>>
     | _<_.expect<{ c: true }, _.not.toHaveFieldsThatAccept<boolean>>>
-    | _<_.expect<{ c: number; b: string }, _.not.toHaveFieldsThatAccept<string | number | boolean>>>;
+    | _<
+          _.expect<
+              { c: number; b: string },
+              _.not.toHaveFieldsThatAccept<string | number | boolean>
+          >
+      >;
 
 type toHaveOnlyValues =
     | _<_.expect<{ a: 1 }, _.toHaveFieldsThatAcceptOnly<1>>>
@@ -368,7 +424,12 @@ type toAcceptOnlyArguments =
     | _<_.expect<(a: [string]) => void, _.toAcceptOnlyArguments<[[string]]>>>
     | _<_.expect<(a: string) => void, _.not.toAcceptOnlyArguments<string[]>>>
     | _<_.expect<(a: string | number) => void, _.not.toAcceptOnlyArguments<[string]>>>
-    | _<_.expect<(a: string | boolean, b: number) => void, _.not.toAcceptOnlyArguments<[string, number]>>>
+    | _<
+          _.expect<
+              (a: string | boolean, b: number) => void,
+              _.not.toAcceptOnlyArguments<[string, number]>
+          >
+      >
     | _<_.expect<(a: string, b?: number) => void, _.not.toAcceptOnlyArguments<[string, number]>>>
     | _<_.expect<(a: string, b?: number) => void, _.not.toAcceptOnlyArguments<[string]>>>
     | _<_.expect<(a: number[]) => void, _.not.toAcceptOnlyArguments<[(1 | 2 | 3)[]]>>>

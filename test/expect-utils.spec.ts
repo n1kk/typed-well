@@ -6,6 +6,15 @@
 
 import { $ } from "../src/expect";
 
+export class EmptyClass {}
+export class ExtendedFunction extends Function {}
+export interface InvocableInterface {
+    (arg: string): number;
+}
+export interface NewableInterface {
+    new (arg: string): number;
+}
+
 type suit_assert =
     | "should check that type evaluates to true"
     | $.assert<true>
@@ -348,6 +357,33 @@ type suit_isEveryAssignable =
     | $.assertNot<$.isEveryAssignable<1 | "" | true, boolean>>
     | $.assertNot<$.isEveryAssignable<boolean, number>>;
 
+type suit_isInvokable =
+    | "can a given type be called like a function"
+    | $.assert<$.isInvokable<() => void>>
+    | $.assert<$.isInvokable<Function>>
+    | $.assert<$.isInvokable<typeof console.log>>
+    | $.assert<$.isInvokable<ExtendedFunction>>
+    | $.assert<$.isInvokable<InvocableInterface>>
+    | $.assert<$.isInvokable<NewableInterface>>
+    | $.assertNot<$.isInvokable<void>>
+    | $.assertNot<$.isInvokable<object>>
+    | $.assertNot<$.isInvokable<number>>
+    | $.assertNot<$.isInvokable<number | ExtendedFunction>>
+    | $.assertNot<$.isInvokable<number | (() => void)>>
+    | $.assertNot<$.isInvokable<unknown>>;
+
+type suit_isNewable =
+    | "can a given type be called with new keyword"
+    | $.assert<$.isNewable<typeof EmptyClass>>
+    | $.assert<$.isNewable<typeof ExtendedFunction>>
+    | $.assert<$.isNewable<typeof Function>>
+    | $.assert<$.isNewable<{ new (arg: number): boolean }>>
+    | $.assertNot<$.isNewable<Function>>
+    | $.assertNot<$.isNewable<() => object>>
+    | $.assertNot<$.isNewable<{ (arg: number): boolean }>>
+    | $.assertNot<$.isNewable<object>>
+    | $.assertNot<$.isNewable<unknown>>;
+
 type suit_doesExtend =
     | "A extends B so B is assignable to A but A is not assignable to B"
     | $.assert<$.doesExtend<1, number>>
@@ -558,7 +594,9 @@ type suit_acceptsOnlyArguments =
     | $.assertNot<$.acceptsOnlyArguments<(a: string | number) => void, [string]>>
     | $.assert<$.acceptsOnlyArguments<(a: string | number) => void, [string | number]>>
     | $.assert<$.acceptsOnlyArguments<(a: string, b: number) => void, [string, number]>>
-    | $.assertNot<$.acceptsOnlyArguments<(a: string | boolean, b: number) => void, [string, number]>>
+    | $.assertNot<
+          $.acceptsOnlyArguments<(a: string | boolean, b: number) => void, [string, number]>
+      >
     | $.assertNot<$.acceptsOnlyArguments<(a: string, b?: number) => void, [string, number]>>
     | $.assertNot<$.acceptsOnlyArguments<(a: string, b?: number) => void, [string]>>
     | $.assert<$.acceptsOnlyArguments<(a: [string]) => void, [[string]]>>
