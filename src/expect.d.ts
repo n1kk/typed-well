@@ -13,6 +13,12 @@ export declare namespace _ {
 
     // -------------
 
+    export type falsy = $.falsy;
+    export type primitive = $.primitive;
+    export type nullish = $.nullish;
+
+    // -------------
+
     type tag<
         target, //
         key extends string
@@ -39,23 +45,30 @@ export declare namespace _ {
     // -------------
 
     type checksMap<given, expected> = {
+        falsy: $.isFalsy<given>;
+        truthy: $.isTruthy<given>;
+        defined: $.isDefined<given>;
+        nullish: $.isAnyAssignable<$.nullish, given>;
+        primitive: $.isPrimitive<given>;
+        invokable: $.isInvokable<given>;
+        newable: $.isNewable<given>;
+
         assign: $.is<given, expected>;
         accept: $.is<expected, given>;
         equal: $.equals<given, expected>;
         extend: $.doesExtend<given, expected>;
         extendedBy: $.doesExtend<expected, given>;
-        defined: $.isDefined<given>;
-        falsy: $.isFalsy<given>;
-        truthy: $.isTruthy<given>;
-        nullish: $.isAnyAssignable<$.nullish, given>;
+
         prefixed: $.isPrefixed<given, expected>;
         suffixed: $.isSuffixed<given, expected>;
         contains: $.doesContain<given, expected>;
+
         includes: $.includes<given, expected>;
         hasKeys: $.hasKeys<given, expected>;
         hasOnlyKeys: $.hasOnlyKeys<given, expected>;
         hasValues: $.hasValues<given, expected>;
         hasOnlyValues: $.hasOnlyValues<given, expected>;
+
         returns: $.returns<given, expected>;
         returnsOnly: $.returnsOnly<given, expected>;
         resolvesTo: $.resolvesTo<given, expected>;
@@ -69,10 +82,13 @@ export declare namespace _ {
     // general
     export type toBeTruthy = check<unknown, "truthy">;
     export type toBeFalsy = check<unknown, "falsy">;
+    export type toBeInvocable = check<unknown, "invokable">;
+    export type toBeNewable = check<unknown, "newable">;
 
     // primitives
     export type toBeDefined = check<unknown, "defined">;
     export type toBeNullish = check<unknown, "nullish">;
+    export type toBePrimitive = check<unknown, "primitive">;
 
     // strings
     export type toStartWith<T extends string> = check<T, "prefixed">;
@@ -103,10 +119,14 @@ export declare namespace _ {
     export type toAcceptOnlyArguments<T extends any[]> = check<T, "argumentsOnly">;
 
     export namespace not {
-        export type toBeDefined = negativeCheck<_.toBeDefined>;
-        export type toBeNullish = negativeCheck<_.toBeNullish>;
         export type toBeTruthy = negativeCheck<_.toBeTruthy>;
         export type toBeFalsy = negativeCheck<_.toBeFalsy>;
+
+        export type toBeDefined = negativeCheck<_.toBeDefined>;
+        export type toBeNullish = negativeCheck<_.toBeNullish>;
+        export type toBeInvocable = negativeCheck<_.toBeInvocable>;
+        export type toBeNewable = negativeCheck<_.toBeNewable>;
+        export type toBePrimitive = negativeCheck<_.toBePrimitive>;
 
         export type toStartWith<T extends string> = negativeCheck<_.toStartWith<T>>;
         export type toEndWith<T extends string> = negativeCheck<_.toEndWith<T>>;

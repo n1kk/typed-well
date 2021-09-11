@@ -74,6 +74,9 @@ export declare namespace $ {
     export type isAnyAssignable<A, B> = not<equals<A extends B ? true : false, false>>;
     export type isEveryAssignable<A, B> = equals<A extends B ? true : false, true>;
 
+    export type isInvokable<T> = or<is<T, { (...args: any[]): any }>, is<T, Function>>;
+    export type isNewable<T> = is<T, { new (...args: any[]): any }>;
+
     export type doesExtend<A, B> = butNot<is<A, B>, is<B, A>>;
     export type doesSubset<A, B> = butNot<is<A, B>, is<B, A>>;
     export type doesSuperset<A, B> = butNot<is<B, A>, is<A, B>>;
