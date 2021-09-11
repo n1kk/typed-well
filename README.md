@@ -4,9 +4,10 @@
 
 Realtime, zero dependency, human-readable library to write unit tests for your TypeScript definitions. Think of it as Jest for types with no extra tooling required.
 
-<div style="text-align:center">
-    <img src="docs/demo1.apng" alt="demo"/>
-</div>
+<!--suppress HtmlDeprecatedAttribute -->
+<p align="center">
+    <img src="docs/demo1.apng" alt="demo">
+</p>
 
 ## Installation
 
