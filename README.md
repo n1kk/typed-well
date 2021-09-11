@@ -6,10 +6,8 @@ This is a work-in-progress project. Not yet finalized.
 
 A zero dependency, human-readable unit testing library for your TypeScript definitions that runs fully in TS Compiler / TS Language Server. Think of it as Jest for types with no extra tooling required.
 
-![demo 1](docs/demo1.apng)
-
 <p align="center">
-<img src="docs/demo1.apng">
+    <img src="docs/demo1.apng">
 </p>
 
 ### About
