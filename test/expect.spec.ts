@@ -1,12 +1,7 @@
-// noinspection JSUnusedGlobalSymbols
+// noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols
 
 import { _ } from "../src/expect";
-import {
-    EmptyClass,
-    ExtendedFunction,
-    InvocableInterface,
-    NewableInterface,
-} from "./expect-utils.spec";
+import { EmptyClass, ExtendedFunction, InvocableInterface, NewableInterface } from "./expect-utils.spec";
 
 type toBeDefined =
     | _<_.expect<number, _.toBeDefined>>
@@ -129,9 +124,9 @@ type toContain =
     | _<_.expect<"asd", _.toContain<"a">>>
     | _<_.expect<"asd", _.toContain<"s">>>
     | _<_.expect<"asd", _.toContain<"d">>>
-    | _<_.expect<"asssd", _.toContain<"ss">>>
-    | _<_.expect<"asssd", _.toContain<"sss">>>
-    | _<_.expect<"asssd", _.not.toContain<"-">>>
+    | _<_.expect<"assert", _.toContain<"ss">>>
+    | _<_.expect<"assert", _.toContain<"sse">>>
+    | _<_.expect<"assert", _.not.toContain<"-">>>
     | _<_.expect<1, _.not.toContain<"-">>>
     | _<_.expect<undefined, _.not.toContain<"-">>>
     | _<_.expect<{}, _.not.toContain<"-">>>;
@@ -279,12 +274,7 @@ type toHaveValues =
     | _<_.expect<{ a: number }, _.not.toHaveFieldsThatAccept<unknown>>>
     | _<_.expect<{ c: number; b: string }, _.not.toHaveFieldsThatAccept<boolean>>>
     | _<_.expect<{ c: true }, _.not.toHaveFieldsThatAccept<boolean>>>
-    | _<
-          _.expect<
-              { c: number; b: string },
-              _.not.toHaveFieldsThatAccept<string | number | boolean>
-          >
-      >;
+    | _<_.expect<{ c: number; b: string }, _.not.toHaveFieldsThatAccept<string | number | boolean>>>;
 
 type toHaveOnlyValues =
     | _<_.expect<{ a: 1 }, _.toHaveFieldsThatAcceptOnly<1>>>
@@ -424,12 +414,7 @@ type toAcceptOnlyArguments =
     | _<_.expect<(a: [string]) => void, _.toAcceptOnlyArguments<[[string]]>>>
     | _<_.expect<(a: string) => void, _.not.toAcceptOnlyArguments<string[]>>>
     | _<_.expect<(a: string | number) => void, _.not.toAcceptOnlyArguments<[string]>>>
-    | _<
-          _.expect<
-              (a: string | boolean, b: number) => void,
-              _.not.toAcceptOnlyArguments<[string, number]>
-          >
-      >
+    | _<_.expect<(a: string | boolean, b: number) => void, _.not.toAcceptOnlyArguments<[string, number]>>>
     | _<_.expect<(a: string, b?: number) => void, _.not.toAcceptOnlyArguments<[string, number]>>>
     | _<_.expect<(a: string, b?: number) => void, _.not.toAcceptOnlyArguments<[string]>>>
     | _<_.expect<(a: number[]) => void, _.not.toAcceptOnlyArguments<[(1 | 2 | 3)[]]>>>

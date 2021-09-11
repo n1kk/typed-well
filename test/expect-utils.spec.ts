@@ -594,9 +594,7 @@ type suit_acceptsOnlyArguments =
     | $.assertNot<$.acceptsOnlyArguments<(a: string | number) => void, [string]>>
     | $.assert<$.acceptsOnlyArguments<(a: string | number) => void, [string | number]>>
     | $.assert<$.acceptsOnlyArguments<(a: string, b: number) => void, [string, number]>>
-    | $.assertNot<
-          $.acceptsOnlyArguments<(a: string | boolean, b: number) => void, [string, number]>
-      >
+    | $.assertNot<$.acceptsOnlyArguments<(a: string | boolean, b: number) => void, [string, number]>>
     | $.assertNot<$.acceptsOnlyArguments<(a: string, b?: number) => void, [string, number]>>
     | $.assertNot<$.acceptsOnlyArguments<(a: string, b?: number) => void, [string]>>
     | $.assert<$.acceptsOnlyArguments<(a: [string]) => void, [[string]]>>
