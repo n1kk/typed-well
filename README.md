@@ -25,7 +25,7 @@ This library exposes a set of utilities neatly packed into a namespace `_` to pr
 import { _ } from "typed-well";
 ```
 
-The namespace doubles as a type that is a shortcut to the possitive assertion.
+The namespace doubles as a type that is a shortcut to the positive assertion.
 
 ```ts
 type test_suit =
