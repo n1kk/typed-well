@@ -52,9 +52,9 @@ type test_suit =
 ## API
 
 - Assertions
-  - [`_< expectation >`](#_)
-  - [`_.pass< expectation >`](#pass)
-  - [`_.fail< expectation >`](#fail)
+  - [`_< test >`](#_)
+  - [`_.pass< test >`](#pass)
+  - [`_.fail< test >`](#fail)
   - [`_.not`](#not)
 - Expectations
   - [`_.expect< given, check >`](#expect)
@@ -99,7 +99,7 @@ type test_suit =
   - [`_.toAcceptParameters< expected >`](#toAcceptParameters)
   - [`_.toAcceptOnlyParameters< expected >`](#toAcceptOnlyParameters)
 
-## <a name="_">#</a> `_< check >`
+## <a name="_">#</a> `_< test >`
 
 Shortcut to a positive assertion [`_.pass< expectation >`](#pass). Expects check type to resolve to `true`.
 
@@ -107,7 +107,7 @@ Shortcut to a positive assertion [`_.pass< expectation >`](#pass). Expects check
 type test = _<_.expect<"a", _.toBeAssignableTo<string>>>;
 ```
 
-## <a name="pass">#</a> `_.pass< check >`
+## <a name="pass">#</a> `_.pass< test >`
 
 Positive assertion. Expects check type to resolve to `true`.
 
@@ -115,7 +115,7 @@ Positive assertion. Expects check type to resolve to `true`.
 type test = _.pass<_.expect<"a", _.toBeAssignableTo<string>>>;
 ```
 
-## <a name="fail">#</a> `_.fail< check >`
+## <a name="fail">#</a> `_.fail< test >`
 
 Negative assertion. Expects check type to resolve to `false`.
 
@@ -136,7 +136,7 @@ type suit =
   | _.fail<_.expect<number, _.toAccept<"foo">>>;
 ```
 
-## <a name="expect">#</a> `_.expect< given, expectation >`
+## <a name="expect">#</a> `_.expect< given, check >`
 
 Runs a check against a given type and resolves in the checks boolean result: `true` if check passes and `false` if it fails.
 
