@@ -6,7 +6,7 @@ Realtime, zero dependency, human-readable library to write unit tests for your T
 
 <!--suppress HtmlDeprecatedAttribute -->
 <p align="center">
-    <img src="assets/demo1.apng" alt="demo">
+    <img src="https://github.com/n1kk/typed-well/raw/master/assets/demo1.apng" alt="demo">
 </p>
 
 ## Installation
