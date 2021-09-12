@@ -1,4 +1,4 @@
-> work in progress !
+> Work in progress! Minor versions of v0 can have breaking api changes, lock this package to exact version or to the latest patch.
 
 # Typed-Well
 
@@ -6,7 +6,7 @@ Realtime, zero dependency, human-readable library to write unit tests for your T
 
 <!--suppress HtmlDeprecatedAttribute -->
 <p align="center">
-    <img src="docs/demo1.apng" alt="demo">
+    <img src="assets/demo1.apng" alt="demo">
 </p>
 
 ## Installation
@@ -17,13 +17,13 @@ Install it via your favorite package manager:
 - `yarn add -D typed-well`
 - `pnpm i -D typed-well`
 
-This library exposes a set of utilities packed into a namespace `_` to prevent global scope pollution. To use them you just import the name space in your test file.
+## Usage
+
+This library exposes a set of utilities neatly packed into a namespace `_` to prevent global scope pollution. To use them just import the namespace in your test file.
 
 ```ts
 import { _ } from "typed-well";
 ```
-
-## Usage
 
 Utilities mimic Jest's `expect` matchers, they are just a set of custom type definitions. It doesn't require you to install any additional tools or define your result expectations in comments. You just write a test and if check fails TS compiler will throw an error on that line, and your IDE will even highlight it.
 
