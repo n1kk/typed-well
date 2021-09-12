@@ -15,7 +15,7 @@ Install it via your favorite package manager:
 
 - `npm i -D typed-well`
 - `yarn add -D typed-well`
-- `pnpm i -D typed-well`
+- `pnpm add -D typed-well`
 
 ## Usage
 
