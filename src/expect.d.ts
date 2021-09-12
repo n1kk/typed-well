@@ -2,12 +2,14 @@ import { $ as utils } from "./expect-utils";
 
 export declare type _<check extends true> = never;
 
-// TODO: everything is public in d.ts but not in .ts, convert d.ts to .ts before publishing
-
 // TODO: figure out how to detect a union type
+// TODO: TS peer dependency
+
 export import $ = utils;
 
 export declare namespace _ {
+    export import $ = utils;
+
     export type pass<condition extends true> = never;
     export type fail<condition extends false> = never;
 
@@ -52,6 +54,7 @@ export declare namespace _ {
         primitive: $.isPrimitive<given>;
         invokable: $.isInvokable<given>;
         newable: $.isNewable<given>;
+        literal: $.isLiteral<given>;
 
         assign: $.is<given, expected>;
         accept: $.is<expected, given>;
@@ -73,8 +76,8 @@ export declare namespace _ {
         returnsOnly: $.returnsOnly<given, expected>;
         resolvesTo: $.resolvesTo<given, expected>;
         resolvesOnlyTo: $.resolvesOnlyTo<given, expected>;
-        arguments: $.acceptsArguments<given, expected>;
-        argumentsOnly: $.acceptsOnlyArguments<given, expected>;
+        parameters: $.acceptsParameters<given, expected>;
+        parametersOnly: $.acceptsOnlyParameters<given, expected>;
     };
     type checkType = keyof checksMap<any, any>;
 
@@ -89,6 +92,8 @@ export declare namespace _ {
     export type toBeDefined = check<unknown, "defined">;
     export type toBeNullish = check<unknown, "nullish">;
     export type toBePrimitive = check<unknown, "primitive">;
+    export type toBeLiteral = check<unknown, "literal">;
+    export type toBeVoid = check<unknown, "literal">;
 
     // strings
     export type toStartWith<T extends string> = check<T, "prefixed">;
@@ -100,7 +105,8 @@ export declare namespace _ {
     export type toBeAssignableTo<T> = check<T, "assign">;
     export type toExtend<T> = check<T, "extend">;
     export type toBeExtendedBy<T> = check<T, "extendedBy">; // reverse toExtend
-    export type toBeEqualTo<T> = check<T, "equal">;
+    export type toEqualTo<T> = check<T, "equal">;
+    export type toBe<T> = check<T, "equal">;
 
     // objects
     export type toHaveKeys<T extends string> = check<T, "hasKeys">;
@@ -108,6 +114,7 @@ export declare namespace _ {
     export type toHaveFieldsThatAccept<T> = check<T, "hasValues">;
     export type toHaveFieldsThatAcceptOnly<T> = check<T, "hasOnlyValues">;
 
+    // arrays
     export type toInclude<T> = check<T, "includes">;
 
     // functions
@@ -115,8 +122,8 @@ export declare namespace _ {
     export type toReturnOnly<T> = check<T, "returnsOnly">;
     export type toResolveTo<T> = check<T, "resolvesTo">;
     export type toResolveToOnly<T> = check<T, "resolvesOnlyTo">;
-    export type toAcceptArguments<T extends any[]> = check<T, "arguments">;
-    export type toAcceptOnlyArguments<T extends any[]> = check<T, "argumentsOnly">;
+    export type toAcceptParameters<T extends any[]> = check<T, "parameters">;
+    export type toAcceptOnlyParameters<T extends any[]> = check<T, "parametersOnly">;
 
     export namespace not {
         export type toBeTruthy = negativeCheck<_.toBeTruthy>;
@@ -127,6 +134,7 @@ export declare namespace _ {
         export type toBeInvocable = negativeCheck<_.toBeInvocable>;
         export type toBeNewable = negativeCheck<_.toBeNewable>;
         export type toBePrimitive = negativeCheck<_.toBePrimitive>;
+        export type toBeLiteral = negativeCheck<_.toBeLiteral>;
 
         export type toStartWith<T extends string> = negativeCheck<_.toStartWith<T>>;
         export type toEndWith<T extends string> = negativeCheck<_.toEndWith<T>>;
@@ -136,7 +144,9 @@ export declare namespace _ {
         export type toBeAssignableTo<T> = negativeCheck<_.toBeAssignableTo<T>>;
         export type toExtend<T> = negativeCheck<_.toExtend<T>>;
         export type toBeExtendedBy<T> = negativeCheck<_.toBeExtendedBy<T>>;
-        export type toBeEqualTo<T> = negativeCheck<_.toBeEqualTo<T>>;
+        export type toEqualTo<T> = negativeCheck<_.toEqualTo<T>>;
+        export type toBe<T> = negativeCheck<_.toBe<T>>;
+
         export type toInclude<T> = negativeCheck<_.toInclude<T>>;
 
         export type toHaveKeys<T extends string> = negativeCheck<_.toHaveKeys<T>>;
@@ -148,9 +158,9 @@ export declare namespace _ {
         export type toReturnOnly<T> = negativeCheck<_.toReturnOnly<T>>;
         export type toResolveTo<T> = negativeCheck<_.toResolveTo<T>>;
         export type toResolveToOnly<T> = negativeCheck<_.toResolveToOnly<T>>;
-        export type toAcceptArguments<T extends any[]> = negativeCheck<_.toAcceptArguments<T>>;
-        export type toAcceptOnlyArguments<T extends any[]> = negativeCheck<
-            _.toAcceptOnlyArguments<T>
+        export type toAcceptParameters<T extends any[]> = negativeCheck<_.toAcceptParameters<T>>;
+        export type toAcceptOnlyParameters<T extends any[]> = negativeCheck<
+            _.toAcceptOnlyParameters<T>
         >;
     }
 
@@ -191,6 +201,26 @@ export declare namespace _ {
     > = $.if_else<negativeCheck, $.not<result>, result>;
 
     export type expect<given, payload extends check<any, checkType>> = _expect<given, payload>;
+
+    export type expectReturnOf<
+        given extends (...args: any[]) => any,
+        payload extends check<any, checkType>
+    > = _expect<ReturnType<given>, payload>;
+
+    export type expectParametersOf<
+        given extends (...args: any[]) => any,
+        payload extends check<any, checkType>
+    > = _expect<Parameters<given>, payload>;
+
+    export type expectKeysOf<given extends object, payload extends check<any, checkType>> = _expect<
+        keyof given,
+        payload
+    >;
+
+    export type expectValuesOf<
+        given extends { [key: keyof any]: any },
+        payload extends check<any, checkType>
+    > = _expect<given[keyof given], payload>;
 
     export {};
 }

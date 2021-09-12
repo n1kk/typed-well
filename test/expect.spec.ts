@@ -9,6 +9,7 @@ type toBeDefined =
     | _<_.expect<0, _.toBeDefined>>
     | _<_.expect<"", _.toBeDefined>>
     | _<_.expect<false, _.toBeDefined>>
+    | _<_.expect<undefined | number, _.not.toBeDefined>>
     | _<_.expect<undefined, _.not.toBeDefined>>
     | _<_.expect<void, _.not.toBeDefined>>;
 
@@ -71,6 +72,23 @@ type toBePrimitive =
     | _<_.expect<[], _.not.toBePrimitive>>
     | _<_.expect<{ a: number }, _.not.toBePrimitive>>
     | _<_.expect<{}, _.not.toBePrimitive>>;
+
+type toBeLiteral =
+    | _<_.expect<1, _.toBeLiteral>>
+    | _<_.expect<"a", _.toBeLiteral>>
+    | _<_.expect<true, _.toBeLiteral>>
+    | _<_.expect<false, _.toBeLiteral>>
+    | _<_.expect<number, _.not.toBeLiteral>>
+    | _<_.expect<string, _.not.toBeLiteral>>
+    | _<_.expect<null, _.not.toBeLiteral>>
+    | _<_.expect<undefined, _.not.toBeLiteral>>
+    | _<_.expect<bigint, _.not.toBeLiteral>>
+    | _<_.expect<symbol, _.not.toBeLiteral>>
+    | _<_.expect<void, _.not.toBeLiteral>>
+    | _<_.expect<object, _.not.toBeLiteral>>
+    | _<_.expect<[], _.not.toBeLiteral>>
+    | _<_.expect<{ a: number }, _.not.toBeLiteral>>
+    | _<_.expect<{}, _.not.toBeLiteral>>;
 
 type toBeInvocable =
     | _<_.expect<() => void, _.toBeInvocable>>
@@ -160,34 +178,34 @@ type toAccept =
     | _<_.expect<string, _.not.toAccept<number>>>;
 
 type toBeEqualTo =
-    | _<_.expect<1, _.toBeEqualTo<1>>>
-    | _<_.expect<"a", _.toBeEqualTo<"a">>>
-    | _<_.expect<true, _.toBeEqualTo<true>>>
-    | _<_.expect<[], _.toBeEqualTo<[]>>>
-    | _<_.expect<{}, _.toBeEqualTo<{}>>>
-    | _<_.expect<number, _.toBeEqualTo<number>>>
-    | _<_.expect<string, _.toBeEqualTo<string>>>
-    | _<_.expect<boolean, _.toBeEqualTo<boolean>>>
-    | _<_.expect<Array<any>, _.toBeEqualTo<Array<any>>>>
-    | _<_.expect<object, _.toBeEqualTo<object>>>
-    | _<_.expect<undefined, _.toBeEqualTo<undefined>>>
-    | _<_.expect<null, _.toBeEqualTo<null>>>
-    | _<_.expect<{ a: number }, _.toBeEqualTo<{ a: number }>>>
-    | _<_.expect<number, _.not.toBeEqualTo<string>>>
-    | _<_.expect<1, _.not.toBeEqualTo<2>>>
-    | _<_.expect<1, _.not.toBeEqualTo<number>>>
-    | _<_.expect<1, _.not.toBeEqualTo<"1">>>
-    | _<_.expect<"a", _.not.toBeEqualTo<string>>>
-    | _<_.expect<"a", _.not.toBeEqualTo<"b">>>
-    | _<_.expect<"a", _.not.toBeEqualTo<"">>>
-    | _<_.expect<"a", _.not.toBeEqualTo<undefined>>>
-    | _<_.expect<"a", _.not.toBeEqualTo<null>>>
-    | _<_.expect<string, _.not.toBeEqualTo<{}>>>
-    | _<_.expect<undefined, _.not.toBeEqualTo<null>>>
-    | _<_.expect<undefined, _.not.toBeEqualTo<void>>>
-    | _<_.expect<{ a: number }, _.not.toBeEqualTo<{ b: number }>>>
-    | _<_.expect<{ a: number }, _.not.toBeEqualTo<{ a: string }>>>
-    | _<_.expect<{ a: number }, _.not.toBeEqualTo<{ a: string | number }>>>;
+    | _<_.expect<1, _.toEqualTo<1>>>
+    | _<_.expect<"a", _.toEqualTo<"a">>>
+    | _<_.expect<true, _.toEqualTo<true>>>
+    | _<_.expect<[], _.toEqualTo<[]>>>
+    | _<_.expect<{}, _.toEqualTo<{}>>>
+    | _<_.expect<number, _.toEqualTo<number>>>
+    | _<_.expect<string, _.toEqualTo<string>>>
+    | _<_.expect<boolean, _.toEqualTo<boolean>>>
+    | _<_.expect<Array<any>, _.toEqualTo<Array<any>>>>
+    | _<_.expect<object, _.toEqualTo<object>>>
+    | _<_.expect<undefined, _.toEqualTo<undefined>>>
+    | _<_.expect<null, _.toEqualTo<null>>>
+    | _<_.expect<{ a: number }, _.toEqualTo<{ a: number }>>>
+    | _<_.expect<number, _.not.toEqualTo<string>>>
+    | _<_.expect<1, _.not.toEqualTo<2>>>
+    | _<_.expect<1, _.not.toEqualTo<number>>>
+    | _<_.expect<1, _.not.toEqualTo<"1">>>
+    | _<_.expect<"a", _.not.toEqualTo<string>>>
+    | _<_.expect<"a", _.not.toEqualTo<"b">>>
+    | _<_.expect<"a", _.not.toEqualTo<"">>>
+    | _<_.expect<"a", _.not.toEqualTo<undefined>>>
+    | _<_.expect<"a", _.not.toEqualTo<null>>>
+    | _<_.expect<string, _.not.toEqualTo<{}>>>
+    | _<_.expect<undefined, _.not.toEqualTo<null>>>
+    | _<_.expect<undefined, _.not.toEqualTo<void>>>
+    | _<_.expect<{ a: number }, _.not.toEqualTo<{ b: number }>>>
+    | _<_.expect<{ a: number }, _.not.toEqualTo<{ a: string }>>>
+    | _<_.expect<{ a: number }, _.not.toEqualTo<{ a: string | number }>>>;
 
 type toExtend =
     | _<_.expect<1, _.toExtend<number>>>
@@ -389,36 +407,82 @@ type toResolveToOnly =
     | _<_.expect<() => Promise<number>, _.not.toResolveToOnly<number | string>>>
     | _<_.expect<() => Promise<Promise<string>>, _.not.toResolveToOnly<string>>>;
 
-type toAcceptArguments =
-    | _<_.expect<() => void, _.toAcceptArguments<[]>>>
-    | _<_.expect<(a: string) => void, _.toAcceptArguments<[string]>>>
-    | _<_.expect<(a: string | number) => void, _.toAcceptArguments<[string]>>>
-    | _<_.expect<(a: string | number) => void, _.toAcceptArguments<[string | number]>>>
-    | _<_.expect<(a: string, b: number) => void, _.toAcceptArguments<[string, number]>>>
-    | _<_.expect<(a: string | boolean, b: number) => void, _.toAcceptArguments<[string, number]>>>
-    | _<_.expect<(a: string, b?: number) => void, _.toAcceptArguments<[string, number]>>>
-    | _<_.expect<(a: string, b?: number) => void, _.toAcceptArguments<[string]>>>
-    | _<_.expect<(a: [string]) => void, _.toAcceptArguments<[[string]]>>>
-    | _<_.expect<(a: number[]) => void, _.toAcceptArguments<[[1, 2, 3]]>>>
-    | _<_.expect<(a: number[]) => void, _.toAcceptArguments<[(1 | 2 | 3)[]]>>>
-    | _<_.expect<(a: string) => void, _.not.toAcceptArguments<string[]>>>
-    | _<_.expect<(a: number[]) => void, _.not.toAcceptArguments<[1, 2, 3]>>>
-    | _<_.expect<(a: "a") => void, _.not.toAcceptArguments<[string]>>>
-    | _<_.expect<(a: boolean) => void, _.not.toAcceptArguments<[number]>>>;
+type toAcceptParameters =
+    | _<_.expect<() => void, _.toAcceptParameters<[]>>>
+    | _<_.expect<(a: string) => void, _.toAcceptParameters<[string]>>>
+    | _<_.expect<(a: string | number) => void, _.toAcceptParameters<[string]>>>
+    | _<_.expect<(a: string | number) => void, _.toAcceptParameters<[string | number]>>>
+    | _<_.expect<(a: string, b: number) => void, _.toAcceptParameters<[string, number]>>>
+    | _<_.expect<(a: string | boolean, b: number) => void, _.toAcceptParameters<[string, number]>>>
+    | _<_.expect<(a: string, b?: number) => void, _.toAcceptParameters<[string, number]>>>
+    | _<_.expect<(a: string, b?: number) => void, _.toAcceptParameters<[string]>>>
+    | _<_.expect<(a: [string]) => void, _.toAcceptParameters<[[string]]>>>
+    | _<_.expect<(a: number[]) => void, _.toAcceptParameters<[[1, 2, 3]]>>>
+    | _<_.expect<(a: number[]) => void, _.toAcceptParameters<[(1 | 2 | 3)[]]>>>
+    | _<_.expect<(a: string) => void, _.not.toAcceptParameters<string[]>>>
+    | _<_.expect<(a: number[]) => void, _.not.toAcceptParameters<[1, 2, 3]>>>
+    | _<_.expect<(a: "a") => void, _.not.toAcceptParameters<[string]>>>
+    | _<_.expect<(a: boolean) => void, _.not.toAcceptParameters<[number]>>>;
 
-type toAcceptOnlyArguments =
-    | _<_.expect<() => void, _.toAcceptOnlyArguments<[]>>>
-    | _<_.expect<(a: string) => void, _.toAcceptOnlyArguments<[string]>>>
-    | _<_.expect<(a: string | number) => void, _.toAcceptOnlyArguments<[string | number]>>>
-    | _<_.expect<(a: string, b: number) => void, _.toAcceptOnlyArguments<[string, number]>>>
-    | _<_.expect<(a: [string]) => void, _.toAcceptOnlyArguments<[[string]]>>>
-    | _<_.expect<(a: string) => void, _.not.toAcceptOnlyArguments<string[]>>>
-    | _<_.expect<(a: string | number) => void, _.not.toAcceptOnlyArguments<[string]>>>
-    | _<_.expect<(a: string | boolean, b: number) => void, _.not.toAcceptOnlyArguments<[string, number]>>>
-    | _<_.expect<(a: string, b?: number) => void, _.not.toAcceptOnlyArguments<[string, number]>>>
-    | _<_.expect<(a: string, b?: number) => void, _.not.toAcceptOnlyArguments<[string]>>>
-    | _<_.expect<(a: number[]) => void, _.not.toAcceptOnlyArguments<[(1 | 2 | 3)[]]>>>
-    | _<_.expect<(a: number[]) => void, _.not.toAcceptOnlyArguments<[[1, 2, 3]]>>>
-    | _<_.expect<(a: number[]) => void, _.not.toAcceptOnlyArguments<[1, 2, 3]>>>
-    | _<_.expect<(a: "a") => void, _.not.toAcceptOnlyArguments<[string]>>>
-    | _<_.expect<(a: boolean) => void, _.not.toAcceptOnlyArguments<[number]>>>;
+type toAcceptOnlyParameters =
+    | _<_.expect<() => void, _.toAcceptOnlyParameters<[]>>>
+    | _<_.expect<(a: string) => void, _.toAcceptOnlyParameters<[string]>>>
+    | _<_.expect<(a: string | number) => void, _.toAcceptOnlyParameters<[string | number]>>>
+    | _<_.expect<(a: string, b: number) => void, _.toAcceptOnlyParameters<[string, number]>>>
+    | _<_.expect<(a: [string]) => void, _.toAcceptOnlyParameters<[[string]]>>>
+    | _<_.expect<(a: string) => void, _.not.toAcceptOnlyParameters<string[]>>>
+    | _<_.expect<(a: string | number) => void, _.not.toAcceptOnlyParameters<[string]>>>
+    | _<_.expect<(a: string | boolean, b: number) => void, _.not.toAcceptOnlyParameters<[string, number]>>>
+    | _<_.expect<(a: string, b?: number) => void, _.not.toAcceptOnlyParameters<[string, number]>>>
+    | _<_.expect<(a: string, b?: number) => void, _.not.toAcceptOnlyParameters<[string]>>>
+    | _<_.expect<(a: number[]) => void, _.not.toAcceptOnlyParameters<[(1 | 2 | 3)[]]>>>
+    | _<_.expect<(a: number[]) => void, _.not.toAcceptOnlyParameters<[[1, 2, 3]]>>>
+    | _<_.expect<(a: number[]) => void, _.not.toAcceptOnlyParameters<[1, 2, 3]>>>
+    | _<_.expect<(a: "a") => void, _.not.toAcceptOnlyParameters<[string]>>>
+    | _<_.expect<(a: boolean) => void, _.not.toAcceptOnlyParameters<[number]>>>;
+
+type expectReturnTypeOf =
+    | _<_.expectReturnOf<() => void, _.not.toBeDefined>>
+    | _<_.expectReturnOf<() => undefined, _.not.toBeDefined>>
+    | _<_.expectReturnOf<() => undefined | number, _.not.toBeDefined>>
+    | _<_.expectReturnOf<() => number, _.toBeDefined>>
+    | _<_.expectReturnOf<() => number, _.toBe<number>>>
+    | _<_.expectReturnOf<() => never, _.toBe<never>>>
+    | _<_.expectReturnOf<() => never, _.not.toBe<void>>>
+    | _<_.expectReturnOf<() => 1, _.toBeLiteral>>
+    | _<_.expectReturnOf<() => () => void, _.toBeAssignableTo<Function>>>;
+
+type expectParametersOf =
+    | _<_.expectParametersOf<() => void, _.toAccept<[]>>>
+    | _<_.expectParametersOf<(a: string) => void, _.toAccept<[string]>>>
+    | _<_.expectParametersOf<(a: string | number) => void, _.toAccept<[string]>>>
+    | _<_.expectParametersOf<(a: string | number) => void, _.toAccept<[string | number]>>>
+    | _<_.expectParametersOf<(a: string | number) => void, _.toBe<[string | number]>>>
+    | _<_.expectParametersOf<(a: string | number) => void, _.toEqualTo<[string | number]>>>
+    | _<_.expectParametersOf<(a: string, b: number) => void, _.toAccept<[string, number]>>>
+    | _<_.expectParametersOf<(a: string | boolean, b: number) => void, _.toAccept<[string, number]>>>
+    | _<_.expectParametersOf<(a: string, b?: number) => void, _.toAccept<[string, number]>>>
+    | _<_.expectParametersOf<(a: string, b?: number) => void, _.toAccept<[string]>>>
+    | _<_.expectParametersOf<(a: [string]) => void, _.toAccept<[[string]]>>>
+    | _<_.expectParametersOf<(a: number[]) => void, _.toAccept<[[1, 2, 3]]>>>
+    | _<_.expectParametersOf<(a: number[]) => void, _.toAccept<[(1 | 2 | 3)[]]>>>
+    | _<_.expectParametersOf<(a: string) => void, _.not.toAccept<string[]>>>
+    | _<_.expectParametersOf<(a: number[]) => void, _.not.toAccept<[1, 2, 3]>>>
+    | _<_.expectParametersOf<(a: "a") => void, _.not.toAccept<[string]>>>
+    | _<_.expectParametersOf<(a: boolean) => void, _.not.toAccept<[number]>>>;
+
+type expectKeysOf =
+    | _<_.expectKeysOf<{ a: number; b: string }, _.toBe<"a" | "b">>>
+    | _<_.expectKeysOf<{ a: number; b?: string }, _.toBe<"a" | "b">>>
+    | _<_.expectKeysOf<{ a: number; b: string }, _.toAccept<"a">>>
+    | _<_.expectKeysOf<{ a: number; b?: string }, _.toAccept<"b">>>
+    | _<_.expectKeysOf<{ getA: () => number; getB: () => string }, _.toStartWith<"get">>>;
+
+type expectValuesOf =
+    | _<_.expectValuesOf<{ a: number; b: string }, _.toBe<number | string>>>
+    | _<_.expectValuesOf<{ a: number; b?: string }, _.toBe<number | string | undefined>>>
+    | _<_.expectValuesOf<{ a: number; b: string }, _.toAccept<number>>>
+    | _<_.expectValuesOf<{ a: number; b: string }, _.toAccept<string>>>
+    | _<_.expectValuesOf<{ a: number; b: string }, _.not.toAccept<undefined>>>
+    | _<_.expectValuesOf<{ getA: () => number; getB: () => string }, _.toBe<(() => number) | (() => string)>>>
+    | _<_.expectValuesOf<{ getA: () => number; getB: () => string }, _.toAccept<() => 1>>>;

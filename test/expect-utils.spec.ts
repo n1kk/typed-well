@@ -1,7 +1,8 @@
-// noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols
+// noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols,DuplicatedCode
 
 // TODO: add function checks
 // TODO: add any/unknown checks
+// TODO: add never checks
 // TODO: add union checks
 
 import { $ } from "../src/expect";
@@ -84,7 +85,7 @@ type suit_is =
     | $.assert<$.is<(a: string) => void, (...args: any) => any>>
     | $.assert<$.is<(a: number) => "asd", (b: 1) => string>>;
 
-type suit_isnt =
+type suit_is_not =
     | "reverse to 'is'" //
     | "should be covered by 'not' and 'is'";
 
@@ -98,6 +99,7 @@ type suit_equals =
     | $.assert<$.equals<number, number>>
     | $.assert<$.equals<string, string>>
     | $.assert<$.equals<never, never>>
+    | $.assert<$.equals<void, void>>
     | $.assertNot<$.equals<1, 2>>
     | $.assertNot<$.equals<"a", "b">>
     | $.assertNot<$.equals<string, never>>
@@ -131,7 +133,7 @@ type suit_equals =
     | $.assertNot<$.equals<1 | "a", number | string>>
     | $.assertNot<$.equals<number | string, 1 | "a">>
     | $.assert<$.equals<boolean, true | false>>
-    | "sgenerics and aliases"
+    | "generics and aliases"
     | $.assert<$.equals<suit_equals__string_alias, string>>
     | $.assert<suit_equals_generic<string>>
     | $.assert<$.equals<suit_equals_generic_with_default, true>>
@@ -145,7 +147,7 @@ type suit_notEquals =
 
 type suit_if_then =
     | "resolved to type A or B based on a conditional type" //
-    | " priomitives"
+    | " primitives"
     | $.assert<$.equals<$.if_then<true, "then">, "then">>
     | $.assert<$.equals<$.if_then<true, "then", "else">, "then">>
     | $.assert<$.equals<$.if_then<false, "then">, never>>
@@ -161,7 +163,7 @@ type suit_if_then =
 
 type suit_if_else =
     | "resolved to type A or B based on a conditional type" //
-    | " priomitives"
+    | " primitives"
     | $.assert<$.equals<$.if_else<true, "then", "else">, "then">>
     | $.assert<$.equals<$.if_else<false, "then", "else">, "else">>
     | $.assert<$.equals<$.if_else<boolean, "then", "else">, "else">>
@@ -228,15 +230,21 @@ type suit_isUndefined =
     | "resolves true if type is undefined"
     | $.assert<$.isUndefined<undefined>>
     | $.assert<$.isUndefined<void>>
+    // @ts-expect-error
+    | $.assert<$.isUndefined<never>>
     | $.assertNot<$.isUndefined<number>>
     | $.assertNot<$.isUndefined<string>>
     | $.assertNot<$.isUndefined<symbol>>
-    | $.assertNot<$.isUndefined<boolean>>;
+    | $.assertNot<$.isUndefined<boolean>>
+    | $.assertNot<$.isUndefined<never>>;
 
 type suit_isDefined =
-    | "resolves true if type is not undefined"
+    | "resolves true if undefined is not assignable to the type"
     | $.assertNot<$.isDefined<undefined>>
+    | $.assertNot<$.isDefined<undefined | number>>
     | $.assertNot<$.isDefined<void>>
+    | $.assertNot<$.isDefined<void | string>>
+    | $.assertNot<$.isDefined<never>>
     | $.assert<$.isDefined<number>>
     | $.assert<$.isDefined<string>>
     | $.assert<$.isDefined<symbol>>
@@ -452,7 +460,7 @@ type suit_hasOnlyKeys =
     | $.assertNot<$.hasOnlyKeys<{ a: number; b: string; c: boolean }, "a" | "b">>;
 
 type suit_hasValues =
-    | "object should have filds that accept given valyes"
+    | "object should have fields that accept given values"
     | $.assert<$.hasValues<{ a: number }, number>>
     | $.assert<$.hasValues<{ a: number; b: string }, number>>
     | $.assert<$.hasValues<{ a: number; b: string }, number | string>>
@@ -460,7 +468,7 @@ type suit_hasValues =
     | $.assertNot<$.hasValues<{ a: number; b: string }, boolean>>;
 
 type suit_hasOnlyValues =
-    | "object should have filds that accept only given valyes"
+    | "object should have fields that accept only given values"
     | $.assert<$.hasOnlyValues<{ a: number }, number>>
     | $.assertNot<$.hasOnlyValues<{ a: number; b: string }, number>>
     | $.assert<$.hasOnlyValues<{ a: number; b: string }, number | string>>
@@ -570,36 +578,36 @@ type suit_resolvesOnlyTo =
 
 type suit_acceptsArguments =
     | "method should accept arguments"
-    | $.assert<$.acceptsArguments<() => void, []>>
-    | $.assert<$.acceptsArguments<(a: string) => void, [string]>>
-    | $.assertNot<$.acceptsArguments<(a: string) => void, string[]>>
-    | $.assert<$.acceptsArguments<(a: string | number) => void, [string]>>
-    | $.assert<$.acceptsArguments<(a: string | number) => void, [string | number]>>
-    | $.assert<$.acceptsArguments<(a: string, b: number) => void, [string, number]>>
-    | $.assert<$.acceptsArguments<(a: string | boolean, b: number) => void, [string, number]>>
-    | $.assert<$.acceptsArguments<(a: string, b?: number) => void, [string, number]>>
-    | $.assert<$.acceptsArguments<(a: string, b?: number) => void, [string]>>
-    | $.assert<$.acceptsArguments<(a: [string]) => void, [[string]]>>
-    | $.assert<$.acceptsArguments<(a: number[]) => void, [[1, 2, 3]]>>
-    | $.assert<$.acceptsArguments<(a: number[]) => void, [(1 | 2 | 3)[]]>>
-    | $.assertNot<$.acceptsArguments<(a: number[]) => void, [1, 2, 3]>>
-    | $.assertNot<$.acceptsArguments<(a: "a") => void, [string]>>
-    | $.assertNot<$.acceptsArguments<(a: boolean) => void, [number]>>;
+    | $.assert<$.acceptsParameters<() => void, []>>
+    | $.assert<$.acceptsParameters<(a: string) => void, [string]>>
+    | $.assertNot<$.acceptsParameters<(a: string) => void, string[]>>
+    | $.assert<$.acceptsParameters<(a: string | number) => void, [string]>>
+    | $.assert<$.acceptsParameters<(a: string | number) => void, [string | number]>>
+    | $.assert<$.acceptsParameters<(a: string, b: number) => void, [string, number]>>
+    | $.assert<$.acceptsParameters<(a: string | boolean, b: number) => void, [string, number]>>
+    | $.assert<$.acceptsParameters<(a: string, b?: number) => void, [string, number]>>
+    | $.assert<$.acceptsParameters<(a: string, b?: number) => void, [string]>>
+    | $.assert<$.acceptsParameters<(a: [string]) => void, [[string]]>>
+    | $.assert<$.acceptsParameters<(a: number[]) => void, [[1, 2, 3]]>>
+    | $.assert<$.acceptsParameters<(a: number[]) => void, [(1 | 2 | 3)[]]>>
+    | $.assertNot<$.acceptsParameters<(a: number[]) => void, [1, 2, 3]>>
+    | $.assertNot<$.acceptsParameters<(a: "a") => void, [string]>>
+    | $.assertNot<$.acceptsParameters<(a: boolean) => void, [number]>>;
 
 type suit_acceptsOnlyArguments =
     | "method should accept arguments"
-    | $.assert<$.acceptsOnlyArguments<() => void, []>>
-    | $.assert<$.acceptsOnlyArguments<(a: string) => void, [string]>>
-    | $.assertNot<$.acceptsOnlyArguments<(a: string) => void, string[]>>
-    | $.assertNot<$.acceptsOnlyArguments<(a: string | number) => void, [string]>>
-    | $.assert<$.acceptsOnlyArguments<(a: string | number) => void, [string | number]>>
-    | $.assert<$.acceptsOnlyArguments<(a: string, b: number) => void, [string, number]>>
-    | $.assertNot<$.acceptsOnlyArguments<(a: string | boolean, b: number) => void, [string, number]>>
-    | $.assertNot<$.acceptsOnlyArguments<(a: string, b?: number) => void, [string, number]>>
-    | $.assertNot<$.acceptsOnlyArguments<(a: string, b?: number) => void, [string]>>
-    | $.assert<$.acceptsOnlyArguments<(a: [string]) => void, [[string]]>>
-    | $.assertNot<$.acceptsOnlyArguments<(a: number[]) => void, [(1 | 2 | 3)[]]>>
-    | $.assertNot<$.acceptsOnlyArguments<(a: number[]) => void, [[1, 2, 3]]>>
-    | $.assertNot<$.acceptsOnlyArguments<(a: number[]) => void, [1, 2, 3]>>
-    | $.assertNot<$.acceptsOnlyArguments<(a: "a") => void, [string]>>
-    | $.assertNot<$.acceptsOnlyArguments<(a: boolean) => void, [number]>>;
+    | $.assert<$.acceptsOnlyParameters<() => void, []>>
+    | $.assert<$.acceptsOnlyParameters<(a: string) => void, [string]>>
+    | $.assertNot<$.acceptsOnlyParameters<(a: string) => void, string[]>>
+    | $.assertNot<$.acceptsOnlyParameters<(a: string | number) => void, [string]>>
+    | $.assert<$.acceptsOnlyParameters<(a: string | number) => void, [string | number]>>
+    | $.assert<$.acceptsOnlyParameters<(a: string, b: number) => void, [string, number]>>
+    | $.assertNot<$.acceptsOnlyParameters<(a: string | boolean, b: number) => void, [string, number]>>
+    | $.assertNot<$.acceptsOnlyParameters<(a: string, b?: number) => void, [string, number]>>
+    | $.assertNot<$.acceptsOnlyParameters<(a: string, b?: number) => void, [string]>>
+    | $.assert<$.acceptsOnlyParameters<(a: [string]) => void, [[string]]>>
+    | $.assertNot<$.acceptsOnlyParameters<(a: number[]) => void, [(1 | 2 | 3)[]]>>
+    | $.assertNot<$.acceptsOnlyParameters<(a: number[]) => void, [[1, 2, 3]]>>
+    | $.assertNot<$.acceptsOnlyParameters<(a: number[]) => void, [1, 2, 3]>>
+    | $.assertNot<$.acceptsOnlyParameters<(a: "a") => void, [string]>>
+    | $.assertNot<$.acceptsOnlyParameters<(a: boolean) => void, [number]>>;

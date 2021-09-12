@@ -12,7 +12,7 @@ export declare namespace $ {
 
     export type not<A extends boolean> = [A] extends [true] ? false : true;
     export type is<A, B> = [A] extends [B] ? true : false;
-    export type isnt<A, B> = not<is<A, B>>;
+    export type is_not<A, B> = not<is<A, B>>;
     export type equals<A, B> = [A, B] extends [B, A] ? true : false;
     export type notEquals<A, B> = not<equals<A, B>>;
 
@@ -49,8 +49,12 @@ export declare namespace $ {
         B extends boolean
     > = and<A, not<B>>;
 
-    export type isUndefined<T> = is<T, undefined | void>;
-    export type isDefined<T> = not<isUndefined<T>>;
+    export type isUndefined<T> = isAssignable<undefined, T>;
+    export type isDefined<T> = and<not<isUndefined<T>>, isNotNever<T>>;
+
+    type t = isUndefined<never>;
+    type t2 = isDefined<never>;
+
     export type isPrimitive<T> = isAssignable<T, primitive>;
     export type isLiteral<T> = not<
         is<
@@ -131,13 +135,13 @@ export declare namespace $ {
     export type resolvesTo<T, V> = returns<T, Promise<V>>;
     export type resolvesOnlyTo<T, V> = returnsOnly<T, Promise<V>>;
 
-    export type acceptsArguments<T, V> = [V] extends [any[]]
+    export type acceptsParameters<T, V> = [V] extends [any[]]
         ? [T] extends [(...args: infer A) => any]
             ? is<V, A>
             : false
         : false;
 
-    export type acceptsOnlyArguments<T, V> = [V] extends [any[]]
+    export type acceptsOnlyParameters<T, V> = [V] extends [any[]]
         ? [T] extends [(...args: infer A) => any]
             ? equals<V, A>
             : false
