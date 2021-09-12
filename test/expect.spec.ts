@@ -3,6 +3,8 @@
 import { _ } from "../src/expect";
 import { EmptyClass, ExtendedFunction, InvocableInterface, NewableInterface } from "./expect-utils.spec";
 
+// TODO: go over each suit and think of edge cases
+
 type toBeDefined =
     | _<_.expect<number, _.toBeDefined>>
     | _<_.expect<string, _.toBeDefined>>
@@ -273,7 +275,7 @@ type toHaveOnlyKeys =
     // @ts-expect-error
     | _<_.expect<{}, _.not.toHaveOnlyKeys<1>>>;
 
-type toHaveValues =
+type toHaveFieldsThatAccept =
     | _<_.expect<{ a: 1 }, _.toHaveFieldsThatAccept<1>>>
     | _<_.expect<{ a: number }, _.toHaveFieldsThatAccept<1>>>
     | _<_.expect<{ a: string }, _.toHaveFieldsThatAccept<"a">>>
@@ -439,7 +441,8 @@ type toAcceptOnlyParameters =
     | _<_.expect<(a: number[]) => void, _.not.toAcceptOnlyParameters<[[1, 2, 3]]>>>
     | _<_.expect<(a: number[]) => void, _.not.toAcceptOnlyParameters<[1, 2, 3]>>>
     | _<_.expect<(a: "a") => void, _.not.toAcceptOnlyParameters<[string]>>>
-    | _<_.expect<(a: boolean) => void, _.not.toAcceptOnlyParameters<[number]>>>;
+    | _<_.expect<(a: boolean) => void, _.not.toAcceptOnlyParameters<[number]>>>
+    | _<_.expect<(a?: boolean) => void, _.toAcceptOnlyParameters<[a?: boolean | undefined]>>>;
 
 type expectReturnTypeOf =
     | _<_.expectReturnOf<() => void, _.not.toBeDefined>>
@@ -485,4 +488,11 @@ type expectValuesOf =
     | _<_.expectValuesOf<{ a: number; b: string }, _.toAccept<string>>>
     | _<_.expectValuesOf<{ a: number; b: string }, _.not.toAccept<undefined>>>
     | _<_.expectValuesOf<{ getA: () => number; getB: () => string }, _.toBe<(() => number) | (() => string)>>>
-    | _<_.expectValuesOf<{ getA: () => number; getB: () => string }, _.toAccept<() => 1>>>;
+    | _<_.expectValuesOf<{ getA: () => number; getB: () => string }, _.toAccept<() => 1>>>
+    | _<_.expectValuesOf<number[], _.toAccept<1>>>
+    | _<_.expectValuesOf<number[], _.toAccept<number | 0>>>
+    | _<_.expectValuesOf<[string, symbol], _.toAccept<string>>>
+    | _<_.expectValuesOf<[string, symbol], _.toAccept<symbol>>>
+    | _<_.expectValuesOf<[string, symbol], _.toAccept<symbol | string>>>
+    | _<_.expectValuesOf<[string, symbol], _.not.toAccept<number>>>
+    | _<_.expectValuesOf<[string, symbol], _.not.toAccept<[string]>>>;

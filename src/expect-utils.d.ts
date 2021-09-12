@@ -1,28 +1,26 @@
 export declare namespace $ {
     export type falsy = false | "" | 0 | 0n | null | undefined | void;
     export type primitive = string | number | bigint | boolean | symbol | null | undefined;
-    export type nullish = null | undefined;
+    export type nullish = null | undefined | void;
 
     export type assert<condition extends true> = never;
     export type assertNever<condition extends never> = never;
     export type assertNot<condition extends false> = never;
     export type assertResolves<A, B extends A> = never;
 
-    type a = assertResolves<if_then<true, 1>, 1>;
-
     export type not<A extends boolean> = [A] extends [true] ? false : true;
-    export type is<A, B> = [A] extends [B] ? true : false;
-    export type is_not<A, B> = not<is<A, B>>;
+    export type is<A, B> = isAssignable<A, B>;
+    export type isNot<A, B> = not<is<A, B>>;
     export type equals<A, B> = [A, B] extends [B, A] ? true : false;
     export type notEquals<A, B> = not<equals<A, B>>;
 
-    export type if_then<
+    export type ifThen<
         predicate extends boolean, //
         result,
         alternative = never
-    > = if_else<predicate, result, alternative>;
+    > = ifElse<predicate, result, alternative>;
 
-    export type if_else<
+    export type ifElse<
         predicate extends boolean, //
         result,
         alternative
@@ -35,11 +33,11 @@ export declare namespace $ {
     export type and<
         A extends boolean, //
         B extends boolean
-    > = if_then<A, if_then<B, true, false>, false>;
+    > = ifThen<A, ifThen<B, true, false>, false>;
     export type or<
         A extends boolean, //
         B extends boolean
-    > = if_then<A, true, if_then<B, true, false>>;
+    > = ifThen<A, true, ifThen<B, true, false>>;
     export type xor<
         A extends boolean, //
         B extends boolean
@@ -51,9 +49,6 @@ export declare namespace $ {
 
     export type isUndefined<T> = isAssignable<undefined, T>;
     export type isDefined<T> = and<not<isUndefined<T>>, isNotNever<T>>;
-
-    type t = isUndefined<never>;
-    type t2 = isDefined<never>;
 
     export type isPrimitive<T> = isAssignable<T, primitive>;
     export type isLiteral<T> = not<
@@ -74,7 +69,7 @@ export declare namespace $ {
     export type isNever<T> = equals<T, never>;
     export type isNotNever<T> = not<equals<T, never>>;
 
-    export type isAssignable<A, B> = is<A, B>;
+    export type isAssignable<A, B> = [A] extends [B] ? true : false;
     export type isAnyAssignable<A, B> = not<equals<A extends B ? true : false, false>>;
     export type isEveryAssignable<A, B> = equals<A extends B ? true : false, true>;
 
@@ -146,6 +141,8 @@ export declare namespace $ {
             ? equals<V, A>
             : false
         : false;
+
+
 
     export {};
 }

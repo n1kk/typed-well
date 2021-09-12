@@ -5,7 +5,7 @@
 // TODO: add never checks
 // TODO: add union checks
 
-import { $ } from "../src/expect";
+import { $ } from "../src/expect-utils";
 
 export class EmptyClass {}
 export class ExtendedFunction extends Function {}
@@ -15,6 +15,8 @@ export interface InvocableInterface {
 export interface NewableInterface {
     new (arg: string): number;
 }
+
+// ------ ASSERTIONS ------
 
 type suit_assert =
     | "should check that type evaluates to true"
@@ -56,6 +58,37 @@ type suit_assertNever =
     // @ts-expect-error
     | $.assertNever<string>;
 
+// ------ LOGICAL ------
+
+type suit_if_then =
+    | "resolved to type A or B based on a conditional type" //
+    | " primitives"
+    | $.assert<$.equals<$.ifThen<true, "then">, "then">>
+    | $.assert<$.equals<$.ifThen<true, "then", "else">, "then">>
+    | $.assert<$.equals<$.ifThen<false, "then">, never>>
+    | $.assertNot<$.equals<$.ifThen<false, "then">, "then">>
+    | $.assert<$.equals<$.ifThen<false, "then", "else">, "else">>
+    | $.assert<$.equals<$.ifThen<boolean, "then", "else">, "else">>
+    | " unions"
+    | $.assert<$.equals<$.ifThen<true, 1 | "a", 3>, "a" | 1>>
+    | $.assertNot<$.equals<$.ifThen<true | false, 1 | "a", 3>, "a" | 1>>
+    | " faulty input"
+    // @ts-expect-error
+    | $.ifThen<number, "then", "else">;
+
+type suit_if_else =
+    | "resolved to type A or B based on a conditional type" //
+    | " primitives"
+    | $.assert<$.equals<$.ifElse<true, "then", "else">, "then">>
+    | $.assert<$.equals<$.ifElse<false, "then", "else">, "else">>
+    | $.assert<$.equals<$.ifElse<boolean, "then", "else">, "else">>
+    | " unions"
+    | $.assert<$.equals<$.ifElse<true, 1 | "a", 3>, "a" | 1>>
+    | $.assertNot<$.equals<$.ifElse<true | false, 1 | "a", 3>, "a" | 1>>
+    | " faulty input"
+    // @ts-expect-error
+    | $.ifElse<number, "then", "else">;
+
 type suit_not =
     | "should negate a boolean type"
     | $.assert<$.not<false>>
@@ -65,29 +98,65 @@ type suit_not =
     // @ts-expect-error
     | $.assertNot<$.not<string>>;
 
-type suit_is =
-    | "true if A is assignable to B"
-    | $.assert<$.is<"asd", string>>
-    | $.assert<$.is<1, number>>
-    | $.assert<$.is<undefined, void>>
-    | $.assert<$.is<{ a: string; b: number }, { a: string }>>
-    | $.assert<$.is<{ a: 1 }, { a: number }>>
-    | $.assertNot<$.is<string, "asd">>
-    | $.assertNot<$.is<number, 1>>
-    | $.assertNot<$.is<void, undefined>>
-    | $.assertNot<$.is<{ a: string }, { a: string; b: number }>>
-    | $.assertNot<$.is<{ a: number }, { a: 1 }>>
-    | "  functions"
-    | $.assert<$.is<() => string, () => any>>
-    | $.assert<$.is<() => void, () => any>>
-    | $.assert<$.is<() => undefined, () => any>>
-    | $.assert<$.is<() => undefined, (...args: any) => any>>
-    | $.assert<$.is<(a: string) => void, (...args: any) => any>>
-    | $.assert<$.is<(a: number) => "asd", (b: 1) => string>>;
+type suit_and =
+    | "should resolve true of both types resolve to true" //
+    | $.assert<$.and<true, true>>
+    | $.assertNot<$.and<true, false>>
+    | $.assertNot<$.and<false, true>>
+    | $.assertNot<$.and<false, false>>
+    | $.assertNot<$.and<true | false, false>>
+    | $.assertNot<$.and<false, true | false>>
+    // @ts-expect-error
+    | $.assertNot<$.and<number, true>>
+    // @ts-expect-error
+    | $.assertNot<$.and<false, number>>;
+
+type suit_or =
+    | "should resolve true if one of types resolves to true" //
+    | $.assert<$.or<true, true>>
+    | $.assert<$.or<true, false>>
+    | $.assert<$.or<false, true>>
+    | $.assertNot<$.or<false, false>>
+    | $.assertNot<$.or<true | false, false>>
+    | $.assertNot<$.or<false, true | false>>
+    // @ts-expect-error
+    | $.assertNot<$.or<number, true>>
+    // @ts-expect-error
+    | $.assertNot<$.or<false, number>>;
+
+type suit_xor =
+    | "should resolve true types are different" //
+    | $.assert<$.xor<true, false>>
+    | $.assert<$.xor<false, true>>
+    | $.assertNot<$.xor<false, false>>
+    | $.assertNot<$.xor<true, true>>
+    | $.assert<$.xor<true | false, false>>
+    | $.assert<$.xor<false, true | false>>
+    // @ts-expect-error
+    | $.assertNot<$.xor<number, true>>
+    // @ts-expect-error
+    | $.assertNot<$.xor<false, number>>;
+
+type suit_butNot =
+    | "should resolve true if type A is true but not B" //
+    | $.assert<$.butNot<true, false>>
+    | $.assertNot<$.butNot<false, true>>
+    | $.assertNot<$.butNot<false, false>>
+    | $.assertNot<$.butNot<true, true>>
+    | $.assertNot<$.butNot<true | false, false>>
+    | $.assertNot<$.butNot<false, true | false>>
+    // @ts-expect-error
+    | $.assertNot<$.butNot<number, true>>
+    // @ts-expect-error
+    | $.assertNot<$.butNot<false, number>>;
+
+// ------ VALUE CHECKS ------
+
+type suit_is = "shortcut for isAssignable";
 
 type suit_is_not =
-    | "reverse to 'is'" //
-    | "should be covered by 'not' and 'is'";
+    | "negated 'is'" //
+    | "should be covered by 'not' and 'isAssignable'";
 
 type suit_equals_generic<T extends string> = $.equals<T, string>;
 type suit_equals_generic_with_default<T extends string = string> = $.equals<T, string>;
@@ -145,87 +214,6 @@ type suit_notEquals =
     | "reverse of equals, types are not assignable to each other" //
     | " should be covered by 'not' and 'equals'";
 
-type suit_if_then =
-    | "resolved to type A or B based on a conditional type" //
-    | " primitives"
-    | $.assert<$.equals<$.if_then<true, "then">, "then">>
-    | $.assert<$.equals<$.if_then<true, "then", "else">, "then">>
-    | $.assert<$.equals<$.if_then<false, "then">, never>>
-    | $.assertNot<$.equals<$.if_then<false, "then">, "then">>
-    | $.assert<$.equals<$.if_then<false, "then", "else">, "else">>
-    | $.assert<$.equals<$.if_then<boolean, "then", "else">, "else">>
-    | " unions"
-    | $.assert<$.equals<$.if_then<true, 1 | "a", 3>, "a" | 1>>
-    | $.assertNot<$.equals<$.if_then<true | false, 1 | "a", 3>, "a" | 1>>
-    | " faulty input"
-    // @ts-expect-error
-    | $.if_then<number, "then", "else">;
-
-type suit_if_else =
-    | "resolved to type A or B based on a conditional type" //
-    | " primitives"
-    | $.assert<$.equals<$.if_else<true, "then", "else">, "then">>
-    | $.assert<$.equals<$.if_else<false, "then", "else">, "else">>
-    | $.assert<$.equals<$.if_else<boolean, "then", "else">, "else">>
-    | " unions"
-    | $.assert<$.equals<$.if_else<true, 1 | "a", 3>, "a" | 1>>
-    | $.assertNot<$.equals<$.if_else<true | false, 1 | "a", 3>, "a" | 1>>
-    | " faulty input"
-    // @ts-expect-error
-    | $.if_else<number, "then", "else">;
-
-type suit_and =
-    | "should resolve true of both types resolve to true" //
-    | $.assert<$.and<true, true>>
-    | $.assertNot<$.and<true, false>>
-    | $.assertNot<$.and<false, true>>
-    | $.assertNot<$.and<false, false>>
-    | $.assertNot<$.and<true | false, false>>
-    | $.assertNot<$.and<false, true | false>>
-    // @ts-expect-error
-    | $.assertNot<$.and<number, true>>
-    // @ts-expect-error
-    | $.assertNot<$.and<false, number>>;
-
-type suit_or =
-    | "should resolve true if one of types resolves to true" //
-    | $.assert<$.or<true, true>>
-    | $.assert<$.or<true, false>>
-    | $.assert<$.or<false, true>>
-    | $.assertNot<$.or<false, false>>
-    | $.assertNot<$.or<true | false, false>>
-    | $.assertNot<$.or<false, true | false>>
-    // @ts-expect-error
-    | $.assertNot<$.or<number, true>>
-    // @ts-expect-error
-    | $.assertNot<$.or<false, number>>;
-
-type suit_xor =
-    | "should resolve true types are different" //
-    | $.assert<$.xor<true, false>>
-    | $.assert<$.xor<false, true>>
-    | $.assertNot<$.xor<false, false>>
-    | $.assertNot<$.xor<true, true>>
-    | $.assert<$.xor<true | false, false>>
-    | $.assert<$.xor<false, true | false>>
-    // @ts-expect-error
-    | $.assertNot<$.xor<number, true>>
-    // @ts-expect-error
-    | $.assertNot<$.xor<false, number>>;
-
-type suit_butNot =
-    | "should resolve true if type A is true but not B" //
-    | $.assert<$.butNot<true, false>>
-    | $.assertNot<$.butNot<false, true>>
-    | $.assertNot<$.butNot<false, false>>
-    | $.assertNot<$.butNot<true, true>>
-    | $.assertNot<$.butNot<true | false, false>>
-    | $.assertNot<$.butNot<false, true | false>>
-    // @ts-expect-error
-    | $.assertNot<$.butNot<number, true>>
-    // @ts-expect-error
-    | $.assertNot<$.butNot<false, number>>;
-
 type suit_isUndefined =
     | "resolves true if type is undefined"
     | $.assert<$.isUndefined<undefined>>
@@ -236,6 +224,7 @@ type suit_isUndefined =
     | $.assertNot<$.isUndefined<string>>
     | $.assertNot<$.isUndefined<symbol>>
     | $.assertNot<$.isUndefined<boolean>>
+    | $.assertNot<$.isUndefined<() => undefined>>
     | $.assertNot<$.isUndefined<never>>;
 
 type suit_isDefined =
@@ -245,6 +234,7 @@ type suit_isDefined =
     | $.assertNot<$.isDefined<void>>
     | $.assertNot<$.isDefined<void | string>>
     | $.assertNot<$.isDefined<never>>
+    | $.assert<$.isDefined<() => undefined>>
     | $.assert<$.isDefined<number>>
     | $.assert<$.isDefined<string>>
     | $.assert<$.isDefined<symbol>>
@@ -292,6 +282,7 @@ type suit_isFalsy =
     | $.assert<$.isFalsy<undefined>>
     | $.assert<$.isFalsy<void>>
     | $.assertNot<$.isFalsy<1>>
+    | $.assertNot<$.isFalsy<1 | 0>>
     | $.assertNot<$.isFalsy<"a">>
     | $.assertNot<$.isFalsy<number>>
     | $.assertNot<$.isFalsy<string>>
@@ -300,7 +291,8 @@ type suit_isFalsy =
     | $.assertNot<$.isFalsy<object>>
     | $.assertNot<$.isFalsy<[]>>
     | $.assertNot<$.isFalsy<{ a: number }>>
-    | $.assertNot<$.isFalsy<{}>>;
+    | $.assertNot<$.isFalsy<{}>>
+    | $.assertNot<$.isFalsy<number | undefined>>;
 
 type suit_isTruthy =
     | $.assertNot<$.isTruthy<0>>
@@ -343,7 +335,29 @@ type suit_isNotNever =
     | "reverse to isNever" //
     | "should be covered by 'not' and 'isNever'";
 
-type suit_assignable = "same as 'is'";
+type suit_isAssignable =
+    | "true if A is assignable to B"
+    | $.assert<$.isAssignable<"asd", string>>
+    | $.assert<$.isAssignable<1, number>>
+    | $.assert<$.isAssignable<undefined, void>>
+    | $.assert<$.isAssignable<never, never>>
+    | $.assert<$.isAssignable<string, unknown>>
+    | $.assertNot<$.isAssignable<unknown, string>>
+    | $.assert<$.isAssignable<{ a: string; b: number }, { a: string }>>
+    | $.assert<$.isAssignable<{ a: 1 }, { a: number }>>
+    | $.assertNot<$.isAssignable<string, "asd">>
+    | $.assertNot<$.isAssignable<number, 1>>
+    | $.assertNot<$.isAssignable<void, undefined>>
+    | $.assertNot<$.isAssignable<void, never>>
+    | $.assertNot<$.isAssignable<{ a: string }, { a: string; b: number }>>
+    | $.assertNot<$.isAssignable<{ a: number }, { a: 1 }>>
+    | "  functions"
+    | $.assert<$.isAssignable<() => string, () => any>>
+    | $.assert<$.isAssignable<() => void, () => any>>
+    | $.assert<$.isAssignable<() => undefined, () => any>>
+    | $.assert<$.isAssignable<() => undefined, (...args: any) => any>>
+    | $.assert<$.isAssignable<(a: string) => void, (...args: any) => any>>
+    | $.assert<$.isAssignable<(a: number) => "asd", (b: 1) => string>>;
 
 type suit_isAnyAssignable =
     | "is any member of union assignable to a type"
@@ -385,6 +399,7 @@ type suit_isNewable =
     | $.assert<$.isNewable<typeof EmptyClass>>
     | $.assert<$.isNewable<typeof ExtendedFunction>>
     | $.assert<$.isNewable<typeof Function>>
+    | $.assert<$.isNewable<typeof Number>>
     | $.assert<$.isNewable<{ new (arg: number): boolean }>>
     | $.assertNot<$.isNewable<Function>>
     | $.assertNot<$.isNewable<() => object>>
@@ -576,8 +591,8 @@ type suit_resolvesOnlyTo =
     | $.assertNot<$.resolvesOnlyTo<() => Promise<number>, number | string>>
     | $.assertNot<$.resolvesOnlyTo<() => Promise<Promise<string>>, string>>;
 
-type suit_acceptsArguments =
-    | "method should accept arguments"
+type suit_acceptsParameters =
+    | "method should accept parameters"
     | $.assert<$.acceptsParameters<() => void, []>>
     | $.assert<$.acceptsParameters<(a: string) => void, [string]>>
     | $.assertNot<$.acceptsParameters<(a: string) => void, string[]>>
@@ -594,8 +609,8 @@ type suit_acceptsArguments =
     | $.assertNot<$.acceptsParameters<(a: "a") => void, [string]>>
     | $.assertNot<$.acceptsParameters<(a: boolean) => void, [number]>>;
 
-type suit_acceptsOnlyArguments =
-    | "method should accept arguments"
+type suit_acceptsOnlyParameters =
+    | "method should accept only parameters"
     | $.assert<$.acceptsOnlyParameters<() => void, []>>
     | $.assert<$.acceptsOnlyParameters<(a: string) => void, [string]>>
     | $.assertNot<$.acceptsOnlyParameters<(a: string) => void, string[]>>

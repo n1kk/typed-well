@@ -1,15 +1,11 @@
-import { $ as utils } from "./expect-utils";
+import { $ } from "./expect-utils";
 
 export declare type _<check extends true> = never;
 
 // TODO: figure out how to detect a union type
-// TODO: TS peer dependency
-
-export import $ = utils;
+// TODO: swap given and expected terms
 
 export declare namespace _ {
-    export import $ = utils;
-
     export type pass<condition extends true> = never;
     export type fail<condition extends false> = never;
 
@@ -82,37 +78,37 @@ export declare namespace _ {
     type checkType = keyof checksMap<any, any>;
 
     // -------------
-    // general
-    export type toBeTruthy = check<unknown, "truthy">;
-    export type toBeFalsy = check<unknown, "falsy">;
-    export type toBeInvocable = check<unknown, "invokable">;
-    export type toBeNewable = check<unknown, "newable">;
+    // comparison
+    export type toEqualTo<T> = check<T, "equal">;
+    export type toBe<T> = check<T, "equal">;
+    export type toAccept<T> = check<T, "accept">;
+    export type toBeAssignableTo<T> = check<T, "assign">;
+    export type toExtend<T> = check<T, "extend">;
+    export type toBeExtendedBy<T> = check<T, "extendedBy">;
 
     // primitives
     export type toBeDefined = check<unknown, "defined">;
     export type toBeNullish = check<unknown, "nullish">;
     export type toBePrimitive = check<unknown, "primitive">;
     export type toBeLiteral = check<unknown, "literal">;
-    export type toBeVoid = check<unknown, "literal">;
+
+    // general
+    export type toBeTruthy = check<unknown, "truthy">;
+    export type toBeFalsy = check<unknown, "falsy">;
+    export type toBeInvocable = check<unknown, "invokable">;
+    export type toBeNewable = check<unknown, "newable">;
 
     // strings
     export type toStartWith<T extends string> = check<T, "prefixed">;
     export type toEndWith<T extends string> = check<T, "suffixed">;
     export type toContain<T extends string> = check<T, "contains">;
 
-    // comparison
-    export type toAccept<T> = check<T, "accept">;
-    export type toBeAssignableTo<T> = check<T, "assign">;
-    export type toExtend<T> = check<T, "extend">;
-    export type toBeExtendedBy<T> = check<T, "extendedBy">; // reverse toExtend
-    export type toEqualTo<T> = check<T, "equal">;
-    export type toBe<T> = check<T, "equal">;
-
     // objects
     export type toHaveKeys<T extends string> = check<T, "hasKeys">;
     export type toHaveOnlyKeys<T extends string> = check<T, "hasOnlyKeys">;
     export type toHaveFieldsThatAccept<T> = check<T, "hasValues">;
     export type toHaveFieldsThatAcceptOnly<T> = check<T, "hasOnlyValues">;
+    // TODO: readonly fields
 
     // arrays
     export type toInclude<T> = check<T, "includes">;
@@ -175,8 +171,8 @@ export declare namespace _ {
     type extractCheckData<
         T extends check<any, any> //
     > =
-        // for some reason first infer of value results in it being of type T
-        // second infer gets the actual data type
+        // for some reason first infer of a value results in it being of type T
+        // second infer gets the actual data type of the check
         [T] extends [data<infer value, "check", infer type>]
             ? [value] extends [data<infer _value, "check", type>]
                 ? [unwrap<_value>, type]
@@ -198,19 +194,22 @@ export declare namespace _ {
         negativeCheck extends boolean = $.notEquals<payload, payloadValue>,
         data extends [any, any] = extractCheckData<payloadValue>,
         result extends boolean = resolveCheck<given, data[0], data[1]>
-    > = $.if_else<negativeCheck, $.not<result>, result>;
+    > = $.ifElse<negativeCheck, $.not<result>, result>;
 
-    export type expect<given, payload extends check<any, checkType>> = _expect<given, payload>;
+    export type expect<
+        given, //
+        expectation extends check<any, checkType>
+    > = _expect<given, expectation>;
 
     export type expectReturnOf<
         given extends (...args: any[]) => any,
-        payload extends check<any, checkType>
-    > = _expect<ReturnType<given>, payload>;
+        expectation extends check<any, checkType>
+    > = _expect<ReturnType<given>, expectation>;
 
     export type expectParametersOf<
         given extends (...args: any[]) => any,
-        payload extends check<any, checkType>
-    > = _expect<Parameters<given>, payload>;
+        expectation extends check<any, checkType>
+    > = _expect<Parameters<given>, expectation>;
 
     export type expectKeysOf<given extends object, payload extends check<any, checkType>> = _expect<
         keyof given,
@@ -218,9 +217,11 @@ export declare namespace _ {
     >;
 
     export type expectValuesOf<
-        given extends { [key: keyof any]: any },
+        given extends { [key: keyof any]: any } | Array<any>,
         payload extends check<any, checkType>
-    > = _expect<given[keyof given], payload>;
+    > = given extends Array<any>
+        ? _expect<given[number], payload>
+        : _expect<given[keyof given], payload>;
 
     export {};
 }
