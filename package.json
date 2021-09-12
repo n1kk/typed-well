@@ -1,6 +1,6 @@
 {
   "name": "typed-well",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A testing library for your TypeScript definitions.",
   "types": "src/expect.d.ts",
   "scripts": {
