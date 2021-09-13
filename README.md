@@ -95,7 +95,7 @@ type test_suit =
     - [`_.toHaveFieldsThatAcceptOnly< expected >`](#-_tohavefieldsthatacceptonly-expected-)
   - Arrays
     - [`_.toInclude< expected >`](#-_toinclude-expected-)
-  - Gunctions
+  - Functions
     - [`_.toReturn< expected >`](#-_toreturn-expected-)
     - [`_.toReturnOnly< expected >`](#-_toreturnonly-expected-)
     - [`_.toResolveTo< expected >`](#-_toresolveto-expected-)
