@@ -58,7 +58,7 @@ type test_suit =
   - [`_.not`](#-_not)
 - Expectations
   - [`_.expect< given, check >`](#-_expect-given-check-)
-  - [`_.expectReturnOf< given, check >`](#-_expectreturnof-given-check)
+  - [`_.expectReturnOf< given, check >`](#-_expectreturnof-given-check-)
   - [`_.expectParametersOf< given, check >`](#-_expectparametersof-given-check-)
   - [`_.expectKeysOf< given, check >`](#-_expectkeysof-given-check-)
   - [`_.expectValuesOf< given, check >`](#-_expectvaluesof-given-check-)
