@@ -264,6 +264,7 @@ type MyType = number;
 type suit =
   | _<_.expect<MyType, _.toEqualTo<number>>>
   | _<_.expect<MyType, _.not.toEqualTo<1>>>
+  | _<_.expect<MyType, _.not.toEqualTo<string>>>
   | _<_.expect<MyType, _.not.toEqualTo<"1">>>;
 ```
 
@@ -271,7 +272,17 @@ type suit =
 
 ## # `_.toBe< expected >`
 
-Alias for [`_.toEqualTo< expected >`](#-_toequalto-expected-)
+Given type should strictly equal to expected one. Both types should be assignable to each other. Alias for [`_.toEqualTo< expected >`](#-_toequalto-expected-)
+
+```ts
+type MyType = number;
+
+type suit =
+  | _<_.expect<MyType, _.toBe<number>>>
+  | _<_.expect<MyType, _.not.toBe<1>>>
+  | _<_.expect<MyType, _.not.toBe<string>>>
+  | _<_.expect<MyType, _.not.toBe<"1">>>;
+```
 
 [↥ To the listing](#api)
 
