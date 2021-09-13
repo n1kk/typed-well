@@ -52,62 +52,68 @@ type test_suit =
 ## API
 
 - Assertions
-  - [`_< test >`](#_)
-  - [`_.pass< test >`](#pass)
-  - [`_.fail< test >`](#fail)
-  - [`_.not`](#not)
+  - [`_< test >`](#-_-test-)
+  - [`_.pass< test >`](#-_pass-test-)
+  - [`_.fail< test >`](#-_fail-test-)
+  - [`_.not`](#-_not)
 - Expectations
-  - [`_.expect< given, check >`](#expect)
-  - [`_.expectReturnOf< given, check >`](#expectReturnOf)
-  - [`_.expectParametersOf< given, check >`](#expectParametersOf)
-  - [`_.expectKeysOf< given, check >`](#expectKeysOf)
-  - [`_.expectValuesOf< given, check >`](#expectValuesOf)
+  - [`_.expect< given, check >`](#-_expect-given-check-)
+  - [`_.expectReturnOf< given, check >`](#-_expectreturnof-given-check)
+  - [`_.expectParametersOf< given, check >`](#-_expectparametersof-given-check-)
+  - [`_.expectKeysOf< given, check >`](#-_expectkeysof-given-check-)
+  - [`_.expectValuesOf< given, check >`](#-_expectvaluesof-given-check-)
+- Utils
+  - [`_.falsy`](#-_falsy)
+  - [`_.primitive`](#-_primitive)
+  - [`_.nullish`](#-_nullish)
 - Checks
-  <!-- comparison -->
-  - [`_.toEqualTo< expected >`](#toEqualTo)
-  - [`_.toBe< expected >`](#toBe)
-  - [`_.toAccept< expected >`](#toAccept)
-  - [`_.toBeAssignableTo< expected >`](#toBeAssignableTo)
-  - [`_.toExtend< expected >`](#toExtend)
-  - [`_.toBeExtendedBy< expected >`](#toBeExtendedBy)
-  <!-- primitives -->
-  - [`_.toBeDefined`](#toBeDefined)
-  - [`_.toBeNullish`](#toBeNullish)
-  - [`_.toBePrimitive`](#toBePrimitive)
-  - [`_.toBeLiteral`](#toBeLiteral)
-  <!-- general -->
-  - [`_.toBeTruthy`](#toBeTruthy)
-  - [`_.toBeFalsy`](#toBeFalsy)
-  - [`_.toBeInvocable`](#toBeInvocable)
-  - [`_.toBeNewable`](#toBeNewable)
-  <!-- strings -->
-  - [`_.toStartWith< expected >`](#toStartWith)
-  - [`_.toEndWith< expected >`](#toEndWith)
-  - [`_.toContain< expected >`](#toContain)
-  <!-- objects -->
-  - [`_.toHaveKeys< expected >`](#toHaveKeys)
-  - [`_.toHaveOnlyKeys< expected >`](#toHaveOnlyKeys)
-  - [`_.toHaveFieldsThatAccept< expected >`](#toHaveFieldsThatAccept)
-  - [`_.toHaveFieldsThatAcceptOnly< expected >`](#toHaveFieldsThatAcceptOnly)
-  <!-- arrays -->
-  - [`_.toInclude< expected >`](#toInclude)
-  <!-- functions -->
-  - [`_.toReturn< expected >`](#toReturn)
-  - [`_.toReturnOnly< expected >`](#toReturnOnly)
-  - [`_.toResolveTo< expected >`](#toResolveTo)
-  - [`_.toResolveToOnly< expected >`](#toResolveToOnly)
-  - [`_.toAcceptParameters< expected >`](#toAcceptParameters)
-  - [`_.toAcceptOnlyParameters< expected >`](#toAcceptOnlyParameters)
+  - Comparison
+    - [`_.toEqualTo< expected >`](#-_toequalto-expected-)
+    - [`_.toBe< expected >`](#-_tobe-expected-)
+    - [`_.toAccept< expected >`](#-_toaccept-expected-)
+    - [`_.toBeAssignableTo< expected >`](#-_tobeassignableto-expected-)
+    - [`_.toExtend< expected >`](#-_toextend-expected-)
+    - [`_.toBeExtendedBy< expected >`](#-_tobeextendedby-expected-)
+  - Primitives
+    - [`_.toBeDefined`](#-_tobedefined)
+    - [`_.toBeNullish`](#-_tobenullish)
+    - [`_.toBePrimitive`](#-_tobeprimitive)
+    - [`_.toBeLiteral`](#-_tobeliteral)
+  - General
+    - [`_.toBeTruthy`](#-_tobetruthy)
+    - [`_.toBeFalsy`](#-_tobefalsy)
+    - [`_.toBeInvocable`](#-_tobeinvocable)
+    - [`_.toBeNewable`](#-_tobenewable)
+  - Strings
+    - [`_.toStartWith< expected >`](#-_tostartwith-expected-)
+    - [`_.toEndWith< expected >`](#-_toendwith-expected-)
+    - [`_.toContain< expected >`](#-_tocontain-expected-)
+  - Objects
+    - [`_.toHaveKeys< expected >`](#-_tohavekeys-expected-)
+    - [`_.toHaveOnlyKeys< expected >`](#-_tohaveonlykeys-expected-)
+    - [`_.toHaveFieldsThatAccept< expected >`](#-_tohavefieldsthataccept-expected-)
+    - [`_.toHaveFieldsThatAcceptOnly< expected >`](#-_tohavefieldsthatacceptonly-expected-)
+  - Arrays
+    - [`_.toInclude< expected >`](#-_toinclude-expected-)
+  - Gunctions
+    - [`_.toReturn< expected >`](#-_toreturn-expected-)
+    - [`_.toReturnOnly< expected >`](#-_toreturnonly-expected-)
+    - [`_.toResolveTo< expected >`](#-_toresolveto-expected-)
+    - [`_.toResolveToOnly< expected >`](#-_toresolvetoonly-expected-)
+    - [`_.toAcceptParameters< expected >`](#-_toacceptparameters-expected-)
+    - [`_.toAcceptOnlyParameters< expected >`](#-_toacceptonlyparameters-expected-)
 
-## <a name="_">#</a> `_< test >`
+## # `_< test >`
 
-Shortcut to a positive assertion [`_.pass< expectation >`](#pass). Expects check type to resolve to `true`.
+Shortcut to a positive assertion [`_.pass< expectation >`](#-_pass-test-). Expects check type to resolve to `true`.
 
 ```ts
 type test = _<_.expect<"a", _.toBeAssignableTo<string>>>;
 ```
 
-## <a name="pass">#</a> `_.pass< test >`
+[↥ To the listing](#api)
+
+## # `_.pass< test >`
 
 Positive assertion. Expects check type to resolve to `true`.
 
@@ -115,7 +121,9 @@ Positive assertion. Expects check type to resolve to `true`.
 type test = _.pass<_.expect<"a", _.toBeAssignableTo<string>>>;
 ```
 
-## <a name="fail">#</a> `_.fail< test >`
+[↥ To the listing](#api)
+
+## # `_.fail< test >`
 
 Negative assertion. Expects check type to resolve to `false`.
 
@@ -123,7 +131,9 @@ Negative assertion. Expects check type to resolve to `false`.
 type test = _.fail<_.expect<"a", _.toBeAssignableTo<number>>>;
 ```
 
-## <a name="not">#</a> `_.not`
+[↥ To the listing](#api)
+
+## # `_.not`
 
 Negates the checks. It's a namespace that contains aliases to all the check types and negates the result. Can be used to write negative checks in a positive assertion.
 
@@ -136,7 +146,9 @@ type suit =
   | _.fail<_.expect<number, _.toAccept<"foo">>>;
 ```
 
-## <a name="expect">#</a> `_.expect< given, check >`
+[↥ To the listing](#api)
+
+## # `_.expect< given, check >`
 
 Runs a check against a given type and resolves in the checks boolean result: `true` if check passes and `false` if it fails.
 
@@ -146,7 +158,9 @@ type suit =
   | _<_.expect<0, _.toBeTruthy>>; // fails
 ```
 
-## <a name="expectReturnOf">#</a> `_.expectReturnOf< given, check >`
+[↥ To the listing](#api)
+
+## # `_.expectReturnOf< given, check >`
 
 Expects given to be a function and runs the check on its return value. Shortcut for `_.expect<ReturnType<given>, check>`
 
@@ -157,7 +171,9 @@ type suit =
   | _<_.expect<ReturnType<() => string>, _.toAccept<"foo">>>;
 ```
 
-## <a name="expectParametersOf">#</a> `_.expectParametersOf< given, check >`
+[↥ To the listing](#api)
+
+## # `_.expectParametersOf< given, check >`
 
 Expects given to be a function and runs the check on its parameters type. Shortcut for `_.expect<Parameters<given>, check>`
 
@@ -172,7 +188,9 @@ type suit =
   | _<_.expect<Parameters<(a: string, b?: number) => string>, _.toAccept<[string, undefined]>>>;
 ```
 
-## <a name="expectKeysOf">#</a> `_.expectKeysOf< given, check >`
+[↥ To the listing](#api)
+
+## # `_.expectKeysOf< given, check >`
 
 Expects given to be an object and runs the check on its keys. Shortcut for `_.expect<keyof given, check>`
 
@@ -183,7 +201,9 @@ type suit =
   | _<_.expect<keyof { a: string; b?: number }, _.toBe<"a" | "b">>>;
 ```
 
-## <a name="expectValuesOf">#</a> `_.expectValuesOf< given, check >`
+[↥ To the listing](#api)
+
+## # `_.expectValuesOf< given, check >`
 
 Expects given to be an object or an array or a tuple and runs the check on its value types. Shortcut for `_.expect<given[keyof given], check>`
 
@@ -202,7 +222,39 @@ type suit =
   | _<_.expect<MyTuple[number], _.toAccept<number | string>>>;
 ```
 
-## <a name="toEqualTo">#</a> `_.toEqualTo< expected >`
+[↥ To the listing](#api)
+
+## # `_.falsy`
+
+A union of all the base and literal types and values that evaluates as false:
+
+```ts
+export type falsy = false | "" | 0 | 0n | null | undefined | void;
+```
+
+[↥ To the listing](#api)
+
+## # `_.falsy`
+
+A union of all the base types that are considered primitive types in JavaScript. Primitive means has no internal structure, thus can't be accessed inside. Even though `null` is technically of an `object` type it does not allow you to use a property accessor `.` to get it's, or it's prototypes content thus counting as a primitive value.
+
+```ts
+export type primitive = string | number | bigint | boolean | symbol | null | undefined;
+```
+
+[↥ To the listing](#api)
+
+## # `_.falsy`
+
+A union of all the base types that are considered nullish, meaning can accept null or undefined.
+
+```ts
+export type nullish = null | undefined | void;
+```
+
+[↥ To the listing](#api)
+
+## # `_.toEqualTo< expected >`
 
 Given type should strictly equal to expected one. Both types should be assignable to each other.
 
@@ -215,25 +267,17 @@ type suit =
   | _<_.expect<MyType, _.not.toEqualTo<"1">>>;
 ```
 
-## <a name="toBe">#</a> `_.toBe< expected >`
+[↥ To the listing](#api)
 
-Alias for [`_.toEqualTo< expected >`](#toEqualTo)
+## # `_.toBe< expected >`
 
-## <a name="toAccept">#</a> `_.toAccept< expected >`
+Alias for [`_.toEqualTo< expected >`](#-_toequalto-expected-)
 
-Expected type should be assignable to a given one, bot not necessarily the other way around. Reverse of [`_.toBeAssignableTo< expected >`](#toBeAssignableTo).
+[↥ To the listing](#api)
 
-```ts
-type suit =
-  | _<_.expect<number, _.toAccept<1>>>
-  | _<_.expect<1, _.not.toAccept<number>>>
-  | _<_.expect<number | string, _.toAccept<number>>>
-  | _<_.expect<number, _.not.toAccept<number | string>>>;
-```
+## # `_.toAccept< expected >`
 
-## <a name="toBeAssignableTo">#</a> `_.toBeAssignableTo< expected >`
-
-Given type should be assignable to the expected one, bot not necessarily the other way around. Reverse of [`_.toAccept< expected >`](#toAccept).
+Expected type should be assignable to a given one, bot not necessarily the other way around. Reverse of [`_.toBeAssignableTo< expected >`](#-_tobeassignableto-expected-).
 
 ```ts
 type suit =
@@ -243,9 +287,25 @@ type suit =
   | _<_.expect<number, _.not.toAccept<number | string>>>;
 ```
 
-## <a name="toExtend">#</a> `_.toExtend< expected >`
+[↥ To the listing](#api)
 
-Expected type is assignable to given but not the other way around. Means that given type is a superset of the expected one. Reverse of [`_.toBeExtendedBy< expected >`](#toBeExtendedBy).
+## # `_.toBeAssignableTo< expected >`
+
+Given type should be assignable to the expected one, bot not necessarily the other way around. Reverse of [`_.toAccept< expected >`](#-_toaccept-expected-).
+
+```ts
+type suit =
+  | _<_.expect<number, _.toAccept<1>>>
+  | _<_.expect<1, _.not.toAccept<number>>>
+  | _<_.expect<number | string, _.toAccept<number>>>
+  | _<_.expect<number, _.not.toAccept<number | string>>>;
+```
+
+[↥ To the listing](#api)
+
+## # `_.toExtend< expected >`
+
+Expected type is assignable to given but not the other way around. Means that given type is a superset of the expected one. Reverse of [`_.toBeExtendedBy< expected >`](#-_tobeextendedby-expected-).
 
 ```ts
 type suit =
@@ -255,9 +315,11 @@ type suit =
   | _<_.expect<{ a: string; b: number }, _.toExtend<{ a: string }>>>;
 ```
 
-## <a name="toBeExtendedBy">#</a> `_.toBeExtendedBy< expected >`
+[↥ To the listing](#api)
 
-Given type is assignable to expected but not the other way around. Means that expected type is a superset of the given one. Reverse of [`_.toExtend< expected >`](#toExtend).
+## # `_.toBeExtendedBy< expected >`
+
+Given type is assignable to expected but not the other way around. Means that expected type is a superset of the given one. Reverse of [`_.toExtend< expected >`](#-_toextend-expected-).
 
 ```ts
 type suit =
@@ -267,7 +329,9 @@ type suit =
   | _<_.expect<{ a: string }, _.toBeExtendedBy<{ a: string; b: number }>>>;
 ```
 
-## <a name="toBeDefined">#</a> `_.toBeDefined`
+[↥ To the listing](#api)
+
+## # `_.toBeDefined`
 
 Given type does not accept `undefined | void`
 
@@ -282,7 +346,9 @@ type suit =
   | _<_.expect<never, _.not.toBeDefined>>;
 ```
 
-## <a name="toBeNullish">#</a> `_.toBeNullish`
+[↥ To the listing](#api)
+
+## # `_.toBeNullish`
 
 Given type does not accept `null | undefined | void`
 
@@ -295,7 +361,9 @@ type suit =
   | _<_.expect<() => void, _.not.toBeNullish>>;
 ```
 
-## <a name="toBePrimitive">#</a> `_.toBePrimitive`
+[↥ To the listing](#api)
+
+## # `_.toBePrimitive`
 
 Given type can be assigned to one of the primitive types `string | number | bigint | boolean | symbol | null | undefined`
 
@@ -308,7 +376,9 @@ type suit =
   | _<_.expect<() => void, _.not.toBeNullish>>;
 ```
 
-## <a name="toBeLiteral">#</a> `_.toBeLiteral`
+[↥ To the listing](#api)
+
+## # `_.toBeLiteral`
 
 Given type is a literal which means it extends one of these primitives: `number | string | boolean`
 
@@ -321,7 +391,9 @@ type suit =
   | _<_.expect<string, _.not.toBeLiteral>>;
 ```
 
-## <a name="toBeTruthy">#</a> `_.toBeTruthy`
+[↥ To the listing](#api)
+
+## # `_.toBeTruthy`
 
 Given type can contain only truthy values, this means it's not compatible with falsy values and their supersets. Since `0` is falsy `number` can't be considered a truthy type since it can accept `0`.
 
@@ -337,7 +409,9 @@ type suit =
   | _<_.expect<boolean, _.not.toBeTruthy>>;
 ```
 
-## <a name="toBeFalsy">#</a> `_.toBeFalsy`
+[↥ To the listing](#api)
+
+## # `_.toBeFalsy`
 
 Given type can contain only a falsy value: `false | "" | 0 | 0n | null | undefined | void`. Type that can hold falsy and truthy value at the same time, like an optional field, can not be considered falsy.
 
@@ -351,7 +425,9 @@ type suit =
   | _<_.expect<number | undefined, _.not.toBeFalsy>>;
 ```
 
-## <a name="toBeInvocable">#</a> `_.toBeInvocable`
+[↥ To the listing](#api)
+
+## # `_.toBeInvocable`
 
 Given type can be invoked like a function.
 
@@ -364,7 +440,9 @@ type suit =
   | _<_.expect<unknown, _.not.toBeInvocable>>;
 ```
 
-## <a name="toBeNewable">#</a> `_.toBeNewable`
+[↥ To the listing](#api)
+
+## # `_.toBeNewable`
 
 Given type is a constructor and can be instantiated with the `new` keyword.
 
@@ -381,7 +459,9 @@ type suit =
   | _<_.expect<unknown, _.not.toBeNewable>>;
 ```
 
-## <a name="toStartWith">#</a> `_.toStartWith< expected >`
+[↥ To the listing](#api)
+
+## # `_.toStartWith< expected >`
 
 Given and expected types are strings and given is prefixed with expected.
 
@@ -392,7 +472,9 @@ type suit =
   | _<_.expect<"foo", _.not.toStartWith<"bar">>>;
 ```
 
-## <a name="toEndWith">#</a> `_.toEndWith< expected >`
+[↥ To the listing](#api)
+
+## # `_.toEndWith< expected >`
 
 Given and expected types are strings and given is suffixed with expected.
 
@@ -403,7 +485,9 @@ type suit =
   | _<_.expect<"foo", _.not.toEndWith<"bar">>>;
 ```
 
-## <a name="toContain">#</a> `_.toContain< expected >`
+[↥ To the listing](#api)
+
+## # `_.toContain< expected >`
 
 Given and expected types are strings and expected is a substring of the given.
 
@@ -414,7 +498,9 @@ type suit =
   | _<_.expect<"foo", _.not.toEndWith<"bar">>>;
 ```
 
-## <a name="toHaveKeys">#</a> `_.toHaveKeys< expected >`
+[↥ To the listing](#api)
+
+## # `_.toHaveKeys< expected >`
 
 Given is an object that should contain expected keys.
 
@@ -427,7 +513,9 @@ type suit =
   | _<_.expect<object, _.not.toHaveKeys<"a">>>;
 ```
 
-## <a name="toHaveOnlyKeys">#</a> `_.toHaveOnlyKeys< expected >`
+[↥ To the listing](#api)
+
+## # `_.toHaveOnlyKeys< expected >`
 
 Given is an object that should only contain expected keys.
 
@@ -439,7 +527,9 @@ type suit =
   | _<_.expect<{ a: number; b: string }, _.toHaveOnlyKeys<"a" | "b">>>;
 ```
 
-## <a name="toHaveFieldsThatAccept">#</a> `_.toHaveFieldsThatAccept< expected >`
+[↥ To the listing](#api)
+
+## # `_.toHaveFieldsThatAccept< expected >`
 
 Given is an object with fields that accept expected value types.
 
@@ -454,7 +544,9 @@ type suit =
   | _<_.expect<{ a: number; b?: string }, _.not.toHaveFieldsThatAccept<number | string | boolean>>>;
 ```
 
-## <a name="toHaveFieldsThatAcceptOnly">#</a> `_.toHaveFieldsThatAcceptOnly< expected >`
+[↥ To the listing](#api)
+
+## # `_.toHaveFieldsThatAcceptOnly< expected >`
 
 Given is an object with fields that accept only expected value types.
 
@@ -469,7 +561,9 @@ type suit =
   | _<_.expect<{ a: number; b?: string }, _.not.toHaveFieldsThatAccept<number | string | boolean>>>;
 ```
 
-## <a name="toInclude">#</a> `_.toInclude< expected >`
+[↥ To the listing](#api)
+
+## # `_.toInclude< expected >`
 
 Given is an array that can contain the expected type.
 
@@ -483,7 +577,9 @@ type suit =
   | _<_.expect<[number, string], _.not.toInclude<number | string | boolean>>>;
 ```
 
-## <a name="toReturn">#</a> `_.toReturn< expected >`
+[↥ To the listing](#api)
+
+## # `_.toReturn< expected >`
 
 Given is a function whose return type should be assignable to the expected type.
 
@@ -498,7 +594,9 @@ type suit =
   | _<_.expect<() => 1, _.not.toReturn<number>>>;
 ```
 
-## <a name="toReturnOnly">#</a> `_.toReturnOnly< expected >`
+[↥ To the listing](#api)
+
+## # `_.toReturnOnly< expected >`
 
 Given is a function whose return type should strictly equal to the expected type, meaning they both should be assignable to each other.
 
@@ -512,7 +610,9 @@ type suit =
   | _<_.expect<() => 1, _.not.toReturnOnly<number>>>;
 ```
 
-## <a name="toResolveTo">#</a> `_.toResolveTo< expected >`
+[↥ To the listing](#api)
+
+## # `_.toResolveTo< expected >`
 
 Given is a function whose return type is a promise that resolves to the expected type.
 
@@ -526,7 +626,9 @@ type suit =
   | _<_.expect<() => Promise<Promise<string>>, _.not.toResolveTo<string>>>;
 ```
 
-## <a name="toResolveToOnly">#</a> `_.toResolveToOnly< expected >`
+[↥ To the listing](#api)
+
+## # `_.toResolveToOnly< expected >`
 
 Given is a function whose return type is a promise that resolves exactly to the expected type, meaning they both should be assignable to each other.
 
@@ -540,7 +642,9 @@ type suit =
   | _<_.expect<() => Promise<number>, _.not.toResolveToOnly<1>>>;
 ```
 
-## <a name="toAcceptParameters">#</a> `_.toAcceptParameters< expected >`
+[↥ To the listing](#api)
+
+## # `_.toAcceptParameters< expected >`
 
 Given is a function whose parameters can accept expected type.
 
@@ -554,7 +658,9 @@ type suit =
   | _<_.expect<(a: "a") => void, _.not.toAcceptParameters<[string]>>>;
 ```
 
-## <a name="toAcceptOnlyParameters">#</a> `_.toAcceptOnlyParameters< expected >`
+[↥ To the listing](#api)
+
+## # `_.toAcceptOnlyParameters< expected >`
 
 Given is a function whose parameters can accept only expected type. Pay attention to optional parameters! Function with optional parameters resolves its parameters to a tuple with optional elements, and they are not strictly compatible with similar const arrays.
 
@@ -571,3 +677,5 @@ type suit2 =
   // This one passes:
   | _.pass<_.expect<Fn, _.toAcceptOnlyParameters<[a: string, b?: number | undefined]>>>;
 ```
+
+[↥ To the listing](#api)
