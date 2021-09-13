@@ -234,7 +234,7 @@ export type falsy = false | "" | 0 | 0n | null | undefined | void;
 
 [↥ To the listing](#api)
 
-## # `_.falsy`
+## # `_.primitive`
 
 A union of all the base types that are considered primitive types in JavaScript. Primitive means has no internal structure, thus can't be accessed inside. Even though `null` is technically of an `object` type it does not allow you to use a property accessor `.` to get it's, or it's prototypes content thus counting as a primitive value.
 
@@ -244,7 +244,7 @@ export type primitive = string | number | bigint | boolean | symbol | null | und
 
 [↥ To the listing](#api)
 
-## # `_.falsy`
+## # `_.nullish`
 
 A union of all the base types that are considered nullish, meaning can accept null or undefined.
 
