@@ -3,7 +3,7 @@ import { $ } from "./expect-utils";
 export declare type _<check extends true> = never;
 
 // TODO: figure out how to detect a union type
-// TODO: swap given and expected terms
+// TODO: figure out how to convert a union to a tuple and vice-versa
 
 export declare namespace _ {
     export type pass<condition extends true> = never;
