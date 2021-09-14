@@ -142,7 +142,5 @@ export declare namespace $ {
             : false
         : false;
 
-
-
     export {};
 }
