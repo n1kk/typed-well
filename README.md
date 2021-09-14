@@ -2,8 +2,6 @@
 
 # Typed-Well [![github repo](https://img.shields.io/github/package-json/v/n1kk/typed-well?color=informational&label=github&logo=github)](https://github.com/n1kk/typed-well) [![npm package](https://img.shields.io/npm/v/typed-well?color=informational&logo=npm)](https://www.npmjs.com/package/typed-well) ![lines of code](https://img.shields.io/tokei/lines/github/n1kk/typed-well?logo=codefactor&logoColor=fff)
 
-![](https://tokei.rs/b1/github/n1kk/typed-well)
-
 Realtime, zero dependency, human-readable library to write unit tests for your TypeScript definitions. Think of it as Jest for types with no extra tooling required.
 
 <!--suppress HtmlDeprecatedAttribute -->
