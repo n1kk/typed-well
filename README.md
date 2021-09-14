@@ -1,6 +1,6 @@
 > Work in progress! Minor versions of v0 can have breaking api changes, lock this package to exact version or to the latest patch.
 
-# Typed-Well [![github repo](https://img.shields.io/badge/-github-555.svg?logo=Github&logoColor=000)](https://github.com/n1kk/typed-well) [![npm package](https://img.shields.io/badge/-npm-555.svg?logo=npm)](https://www.npmjs.com/package/typed-well)
+# Typed-Well [![github repo](https://img.shields.io/github/package-json/v/n1kk/typed-well?color=informational&label=github&logo=github)](https://github.com/n1kk/typed-well) [![npm package](https://img.shields.io/npm/v/typed-well?color=informational&logo=npm)](https://www.npmjs.com/package/typed-well) ![lines of code](https://img.shields.io/tokei/lines/github/n1kk/typed-well?logo=codefactor&logoColor=fff)
 
 Realtime, zero dependency, human-readable library to write unit tests for your TypeScript definitions. Think of it as Jest for types with no extra tooling required.
 
@@ -226,7 +226,7 @@ type suit =
 
 ## # `_.falsy`
 
-A union of all the base and literal types and values that evaluates as false:
+A union of base and literal types that evaluates as false in JS. This does not include `NaN` since it's type is `number`.
 
 ```ts
 export type falsy = false | "" | 0 | 0n | null | undefined | void;
