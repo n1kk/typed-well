@@ -47,8 +47,9 @@ export declare namespace $ {
         B extends boolean
     > = and<A, not<B>>;
 
-    export type isUndefined<T> = isAssignable<undefined, T>;
-    export type isDefined<T> = and<not<isUndefined<T>>, isNotNever<T>>;
+    export type isUndefined<T> = or<equals<undefined, T>, equals<void, T>>;
+    export type isOptional<T> = isAssignable<undefined, T>;
+    export type isDefined<T> = and<not<isOptional<T>>, isNotNever<T>>;
 
     export type isPrimitive<T> = isAssignable<T, primitive>;
     export type isLiteral<T> = not<

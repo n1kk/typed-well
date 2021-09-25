@@ -4,6 +4,7 @@ export declare type _<check extends true> = never;
 
 // TODO: figure out how to detect a union type
 // TODO: figure out how to convert a union to a tuple and vice-versa
+// TODO: change false check resolves to a strings with explanations
 
 export declare namespace _ {
     export type pass<condition extends true> = never;
@@ -33,7 +34,7 @@ export declare namespace _ {
 
     type check<
         value, //
-        type extends checkType
+        type extends _checkType
     > = data<wrap<value>, "check", type>;
 
     type negativeCheck<
@@ -46,6 +47,7 @@ export declare namespace _ {
         falsy: $.isFalsy<given>;
         truthy: $.isTruthy<given>;
         defined: $.isDefined<given>;
+        optional: $.isOptional<given>;
         nullish: $.isAnyAssignable<$.nullish, given>;
         primitive: $.isPrimitive<given>;
         invokable: $.isInvokable<given>;
@@ -75,7 +77,7 @@ export declare namespace _ {
         parameters: $.acceptsParameters<given, expected>;
         parametersOnly: $.acceptsOnlyParameters<given, expected>;
     };
-    type checkType = keyof checksMap<any, any>;
+    export type _checkType = keyof checksMap<any, any>;
 
     // -------------
     // comparison
@@ -88,6 +90,7 @@ export declare namespace _ {
 
     // primitives
     export type toBeDefined = check<unknown, "defined">;
+    export type toBeOptional = check<unknown, "optional">;
     export type toBeNullish = check<unknown, "nullish">;
     export type toBePrimitive = check<unknown, "primitive">;
     export type toBeLiteral = check<unknown, "literal">;
@@ -126,6 +129,7 @@ export declare namespace _ {
         export type toBeFalsy = negativeCheck<_.toBeFalsy>;
 
         export type toBeDefined = negativeCheck<_.toBeDefined>;
+        export type toBeOptional = negativeCheck<_.toBeOptional>;
         export type toBeNullish = negativeCheck<_.toBeNullish>;
         export type toBeInvocable = negativeCheck<_.toBeInvocable>;
         export type toBeNewable = negativeCheck<_.toBeNewable>;
@@ -182,14 +186,14 @@ export declare namespace _ {
     type resolveCheck<
         given, //
         expected,
-        check extends checkType
+        check extends _checkType
     > = {
         [key in check]: checksMap<given, expected>[key];
     }[check];
 
     type _expect<
         given, //
-        payload extends check<any, checkType>,
+        payload extends check<any, _checkType>,
         payloadValue extends check<any, any> = unwrapNegativeCheck<payload>,
         negativeCheck extends boolean = $.notEquals<payload, payloadValue>,
         data extends [any, any] = extractCheckData<payloadValue>,
@@ -198,27 +202,27 @@ export declare namespace _ {
 
     export type expect<
         given, //
-        expectation extends check<any, checkType>
+        expectation extends check<any, _checkType>
     > = _expect<given, expectation>;
 
     export type expectReturnOf<
         given extends (...args: any[]) => any,
-        expectation extends check<any, checkType>
+        expectation extends check<any, _checkType>
     > = _expect<ReturnType<given>, expectation>;
 
     export type expectParametersOf<
         given extends (...args: any[]) => any,
-        expectation extends check<any, checkType>
+        expectation extends check<any, _checkType>
     > = _expect<Parameters<given>, expectation>;
 
-    export type expectKeysOf<given extends object, payload extends check<any, checkType>> = _expect<
-        keyof given,
-        payload
-    >;
+    export type expectKeysOf<
+        given extends object,
+        payload extends check<any, _checkType>
+    > = _expect<keyof given, payload>;
 
     export type expectValuesOf<
         given extends { [key: keyof any]: any } | Array<any>,
-        payload extends check<any, checkType>
+        payload extends check<any, _checkType>
     > = given extends Array<any>
         ? _expect<given[number], payload>
         : _expect<given[keyof given], payload>;

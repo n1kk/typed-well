@@ -1,6 +1,6 @@
 > Work in progress! Minor versions of v0 can have breaking api changes, lock this package to exact version or to the latest patch.
 
-# Typed-Well [![github repo](https://img.shields.io/github/package-json/v/n1kk/typed-well?color=informational&label=github&logo=github)](https://github.com/n1kk/typed-well) [![npm package](https://img.shields.io/npm/v/typed-well?color=informational&logo=npm)](https://www.npmjs.com/package/typed-well) ![lines of code](https://img.shields.io/tokei/lines/github/n1kk/typed-well?logo=codefactor&logoColor=fff)
+# Typed-Well [![github repo](https://img.shields.io/github/package-json/v/n1kk/typed-well?color=informational&label=github&logo=github)](https://github.com/n1kk/typed-well) [![npm package](https://img.shields.io/npm/v/typed-well?color=informational&logo=npm)](https://www.npmjs.com/package/typed-well)
 
 Realtime, zero dependency, human-readable library to write unit tests for your TypeScript definitions. Think of it as Jest for types with no extra tooling required.
 
@@ -76,6 +76,7 @@ type test_suit =
     - [`_.toBeExtendedBy< expected >`](#-_tobeextendedby-expected-)
   - Primitives
     - [`_.toBeDefined`](#-_tobedefined)
+    - [`_.toBeOptional`](#-_tobeoptional)
     - [`_.toBeNullish`](#-_tobenullish)
     - [`_.toBePrimitive`](#-_tobeprimitive)
     - [`_.toBeLiteral`](#-_tobeliteral)
@@ -153,9 +154,12 @@ type suit =
 Runs a check against a given type and resolves in the checks boolean result: `true` if check passes and `false` if it fails.
 
 ```ts
+type result2 = _.expect<1, _.toBeTruthy>; // result1 is of type `true`
+type result1 = _.expect<0, _.toBeTruthy>; // result1 is of type `false`
+
 type suit =
-  | _<_.expect<1, _.toBeTruthy>> // passes
-  | _<_.expect<0, _.toBeTruthy>>; // fails
+  | _<result2> // passes
+  | _<result1>; // fails
 ```
 
 [↥ To the listing](#api)
@@ -359,9 +363,25 @@ type suit =
 
 [↥ To the listing](#api)
 
+## # `_.toBeOptional`
+
+Given type does can accept `undefined`. Reverse of [`_.toBeDefined`](#-_tobedefined)
+
+```ts
+type suit =
+  | _<_.expect<undefined | number, _.toBeOptional>>
+  | _<_.expect<undefined, _.toBeOptional>>
+  | _<_.expect<void, _.toBeOptional>>
+  | _<_.expect<number, _.not.toBeOptional>>
+  | _<_.expect<"", _.not.toBeOptional>>
+  | _<_.expect<false, _.not.toBeOptional>>;
+```
+
+[↥ To the listing](#api)
+
 ## # `_.toBeNullish`
 
-Given type does not accept `null | undefined | void`
+Given type can accept `null | undefined`
 
 ```ts
 type suit =

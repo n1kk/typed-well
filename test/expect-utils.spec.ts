@@ -215,7 +215,7 @@ type suit_notEquals =
     | " should be covered by 'not' and 'equals'";
 
 type suit_isUndefined =
-    | "resolves true if type is undefined"
+    | "resolves true if type is undefined or void"
     | $.assert<$.isUndefined<undefined>>
     | $.assert<$.isUndefined<void>>
     // @ts-expect-error
@@ -225,7 +225,25 @@ type suit_isUndefined =
     | $.assertNot<$.isUndefined<symbol>>
     | $.assertNot<$.isUndefined<boolean>>
     | $.assertNot<$.isUndefined<() => undefined>>
-    | $.assertNot<$.isUndefined<never>>;
+    | $.assertNot<$.isUndefined<never>>
+    | "unions"
+    | $.assertNot<$.isUndefined<number | string>>
+    | $.assertNot<$.isUndefined<undefined | string>>;
+
+type suit_isOptional =
+    | "resolves true if type can accept undefined"
+    | $.assert<$.isOptional<undefined>>
+    | $.assert<$.isOptional<void>>
+    | $.assert<$.isOptional<undefined | string>>
+    // @ts-expect-error
+    | $.assert<$.isOptional<never>>
+    | $.assertNot<$.isOptional<number>>
+    | $.assertNot<$.isOptional<string>>
+    | $.assertNot<$.isOptional<symbol>>
+    | $.assertNot<$.isOptional<boolean>>
+    | $.assertNot<$.isOptional<() => undefined>>
+    | $.assertNot<$.isOptional<never>>
+    | $.assertNot<$.isOptional<number | string>>;
 
 type suit_isDefined =
     | "resolves true if undefined is not assignable to the type"

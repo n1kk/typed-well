@@ -1,9 +1,51 @@
-// noinspection JSUnusedGlobalSymbols,JSUnusedLocalSymbols
+// noinspection JSUnusedGlobalSymbols
 
 import { _ } from "../src/expect";
-import { EmptyClass, ExtendedFunction, InvocableInterface, NewableInterface } from "./expect-utils.spec";
+import {
+    EmptyClass,
+    ExtendedFunction,
+    InvocableInterface,
+    NewableInterface
+} from "./expect-utils.spec";
 
 // TODO: go over each suit and think of edge cases
+
+type TestMap<T extends { [key in _._checkType]: any }> = T;
+
+type test_map = TestMap<{
+    falsy: toBeFalsy;
+    truthy: toBeTruthy;
+    defined: toBeDefined;
+    optional: toBeOptional;
+    nullish: toBeNullish;
+    primitive: toBePrimitive;
+    invokable: toBeInvocable;
+    newable: toBeNewable;
+    literal: toBeLiteral;
+
+    assign: toBeAssignableTo;
+    accept: toAccept;
+    equal: toBeEqualTo;
+    extend: toExtend;
+    extendedBy: toBeExtendedBy;
+
+    prefixed: toStartWith;
+    suffixed: toEndWith;
+    contains: toContain;
+
+    includes: arrays;
+    hasKeys: toHaveKeys;
+    hasOnlyKeys: toHaveOnlyKeys;
+    hasValues: toHaveFieldsThatAccept;
+    hasOnlyValues: toHaveFieldsThatAcceptOnly;
+
+    returns: toReturn;
+    returnsOnly: toReturnOnly;
+    resolvesTo: toResolveTo;
+    resolvesOnlyTo: toResolveToOnly;
+    parameters: toAcceptParameters;
+    parametersOnly: toAcceptOnlyParameters;
+}>;
 
 type toBeDefined =
     | _<_.expect<number, _.toBeDefined>>
@@ -14,6 +56,16 @@ type toBeDefined =
     | _<_.expect<undefined | number, _.not.toBeDefined>>
     | _<_.expect<undefined, _.not.toBeDefined>>
     | _<_.expect<void, _.not.toBeDefined>>;
+
+type toBeOptional =
+    | _<_.expect<undefined | number, _.toBeOptional>>
+    | _<_.expect<undefined, _.toBeOptional>>
+    | _<_.expect<void, _.toBeOptional>>
+    | _<_.expect<number, _.not.toBeOptional>>
+    | _<_.expect<string, _.not.toBeOptional>>
+    | _<_.expect<0, _.not.toBeOptional>>
+    | _<_.expect<"", _.not.toBeOptional>>
+    | _<_.expect<false, _.not.toBeOptional>>;
 
 type toBeFalsy =
     | _<_.expect<1, _.not.toBeFalsy>>
@@ -108,7 +160,7 @@ type toBeInvocable =
     | _<_.expect<object | InvocableInterface, _.not.toBeInvocable>>
     | _<_.expect<unknown, _.not.toBeInvocable>>;
 
-type suit_isNewable =
+type toBeNewable =
     | "can a given type be called with new keyword"
     | _<_.expect<typeof EmptyClass, _.toBeNewable>>
     | _<_.expect<typeof ExtendedFunction, _.toBeNewable>>
@@ -296,7 +348,7 @@ type toHaveFieldsThatAccept =
     | _<_.expect<{ c: true }, _.not.toHaveFieldsThatAccept<boolean>>>
     | _<_.expect<{ c: number; b: string }, _.not.toHaveFieldsThatAccept<string | number | boolean>>>;
 
-type toHaveOnlyValues =
+type toHaveFieldsThatAcceptOnly =
     | _<_.expect<{ a: 1 }, _.toHaveFieldsThatAcceptOnly<1>>>
     | _<_.expect<{ a: number }, _.toHaveFieldsThatAcceptOnly<number>>>
     | _<_.expect<{ c: number; b: string }, _.toHaveFieldsThatAcceptOnly<string | number>>>
