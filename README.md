@@ -17,6 +17,10 @@ Install it via your favorite package manager:
 - `yarn add -D typed-well`
 - `pnpm add -D typed-well`
 
+### Requirements
+
+- Typescript 4.4 or above.
+
 ## Usage
 
 This library exposes a set of utilities neatly packed into a namespace `_` to prevent global scope pollution. To use them just import the namespace in your test file.

@@ -5,7 +5,7 @@
 // TODO: add never checks
 // TODO: add union checks
 
-import { $ } from "../src/expect-utils";
+import { $ } from "../lib/expect-utils";
 
 export class EmptyClass {}
 export class ExtendedFunction extends Function {}

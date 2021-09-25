@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { _ } from "../src/expect";
+import { _ } from "../lib/expect";
 import {
     EmptyClass,
     ExtendedFunction,

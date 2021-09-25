@@ -1,6 +1,13 @@
 {
   "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": true,
     "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "target": "ES2019",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -9,6 +16,7 @@
     "declaration": true,
     "noEmit": true
   },
-  "include": ["src/**/*.ts", "test/**/*.spec.ts"],
+  "include": [
+    "lib/**/*.ts", "test/**/*.spec.ts"],
   "exclude": ["node_modules", "docs"]
 }
