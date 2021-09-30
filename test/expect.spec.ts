@@ -22,6 +22,7 @@ type test_map = TestMap<{
     invokable: toBeInvocable;
     newable: toBeNewable;
     literal: toBeLiteral;
+    never: toBeNever;
 
     assign: toBeAssignableTo;
     accept: toAccept;
@@ -143,6 +144,15 @@ type toBeLiteral =
     | _<_.expect<[], _.not.toBeLiteral>>
     | _<_.expect<{ a: number }, _.not.toBeLiteral>>
     | _<_.expect<{}, _.not.toBeLiteral>>;
+
+type toBeNever =
+    | _<_.expect<never, _.toBeNever>>
+    | _<_.expect<"a", _.not.toBeNever>>
+    | _<_.expect<void, _.not.toBeNever>>
+    | _<_.expect<_.primitive, _.not.toBeNever>>
+    | _.fail<_.expect<never, _.not.toBeNever>>
+    | _.fail<_.expect<"a", _.toBeNever>>
+    | _.fail<_.expect<_.primitive, _.toBeNever>>;
 
 type toBeInvocable =
     | _<_.expect<() => void, _.toBeInvocable>>

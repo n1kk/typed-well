@@ -481,9 +481,12 @@ type suit_hasKeys =
     | $.assert<$.hasKeys<{ a: number }, "a">>
     | $.assert<$.hasKeys<{ a: number; b: string }, "a" | "b">>
     | $.assert<$.hasKeys<{ a: number; b: string; c: boolean }, "a" | "b">>
+    | $.assert<$.hasKeys<{ a: number; b: string; c?: boolean }, "c">>
     | $.assertNot<$.hasKeys<{ a: number }, "b">>
     | $.assertNot<$.hasKeys<{ a: number; b: string }, "a" | "b" | "c">>
     | $.assertNot<$.hasKeys<{ a: number; b: string; c: boolean }, []>>;
+
+type t = $.doesExtend<{ a: number }, Partial<Record<"a", unknown>>>;
 
 type suit_hasOnlyKeys =
     | "object should have only keys with given names"

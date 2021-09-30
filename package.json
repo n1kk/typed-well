@@ -22,7 +22,7 @@
   },
   "bugs": "https://github.com/n1kk/typed-well",
   "scripts": {
-    "test": "tsc",
+    "test": "tsc --strict --noEmit **/*.spec.ts",
     "prepublishOnly": "pnpm test"
   },
   "files": [

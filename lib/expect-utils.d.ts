@@ -9,8 +9,7 @@ export declare namespace $ {
     export type assertResolves<A, B extends A> = never;
 
     export type not<A extends boolean> = [A] extends [true] ? false : true;
-    export type is<A, B> = isAssignable<A, B>;
-    export type isNot<A, B> = not<is<A, B>>;
+    export type isNot<A, B> = not<isAssignable<A, B>>;
     export type equals<A, B> = [A, B] extends [B, A] ? true : false;
     export type notEquals<A, B> = not<equals<A, B>>;
 
@@ -53,7 +52,7 @@ export declare namespace $ {
 
     export type isPrimitive<T> = isAssignable<T, primitive>;
     export type isLiteral<T> = not<
-        is<
+        isAssignable<
             | doesExtend<T, number> //
             | doesExtend<T, string>
             | doesExtend<T, boolean>,
@@ -70,16 +69,19 @@ export declare namespace $ {
     export type isNever<T> = equals<T, never>;
     export type isNotNever<T> = not<equals<T, never>>;
 
-    export type isAssignable<A, B> = [A] extends [B] ? true : false;
+    export type isAssignable<A, toB> = [A] extends [toB] ? true : false;
     export type isAnyAssignable<A, B> = not<equals<A extends B ? true : false, false>>;
     export type isEveryAssignable<A, B> = equals<A extends B ? true : false, true>;
 
-    export type isInvokable<T> = or<is<T, { (...args: any[]): any }>, is<T, Function>>;
-    export type isNewable<T> = is<T, { new (...args: any[]): any }>;
+    export type isInvokable<T> = or<
+        isAssignable<T, { (...args: any[]): any }>,
+        isAssignable<T, Function>
+    >;
+    export type isNewable<T> = isAssignable<T, { new (...args: any[]): any }>;
 
-    export type doesExtend<A, B> = butNot<is<A, B>, is<B, A>>;
-    export type doesSubset<A, B> = butNot<is<A, B>, is<B, A>>;
-    export type doesSuperset<A, B> = butNot<is<B, A>, is<A, B>>;
+    export type doesExtend<A, B> = butNot<isAssignable<A, B>, isAssignable<B, A>>;
+    export type doesSubset<A, B> = butNot<isAssignable<A, B>, isAssignable<B, A>>;
+    export type doesSuperset<A, B> = butNot<isAssignable<B, A>, isAssignable<A, B>>;
 
     export type isPrefixed<
         T, //
@@ -114,9 +116,10 @@ export declare namespace $ {
             : false
         : false;
 
-    export type hasKeys<O, K> = [K] extends [string] ? doesExtend<O, Record<K, unknown>> : false;
+    export type hasKeys<O, K> = [K] extends [string] ? isAssignable<K, keyof O> : false;
+    // TODO: add hasOptionalKeys and hasRequiredKeys
     export type hasOnlyKeys<O, K> = [K] extends [string] ? equals<O, Record<K, any>> : false;
-    export type hasValues<O, V> = is<V, O[keyof O]>;
+    export type hasValues<O, V> = isAssignable<V, O[keyof O]>;
     export type hasOnlyValues<O, V> = equals<V, O[keyof O]>;
 
     export type includes<T, V> = [T] extends [Array<any>]
@@ -125,7 +128,9 @@ export declare namespace $ {
             : false
         : false;
 
-    export type returns<T, V> = [T] extends [(...args: any) => infer R] ? is<V, R> : false;
+    export type returns<T, V> = [T] extends [(...args: any) => infer R]
+        ? isAssignable<V, R>
+        : false;
     export type returnsOnly<T, V> = [T] extends [(...args: any) => infer R] ? equals<R, V> : false;
 
     export type resolvesTo<T, V> = returns<T, Promise<V>>;
@@ -133,7 +138,7 @@ export declare namespace $ {
 
     export type acceptsParameters<T, V> = [V] extends [any[]]
         ? [T] extends [(...args: infer A) => any]
-            ? is<V, A>
+            ? isAssignable<V, A>
             : false
         : false;
 

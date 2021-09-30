@@ -53,9 +53,10 @@ export declare namespace _ {
         invokable: $.isInvokable<given>;
         newable: $.isNewable<given>;
         literal: $.isLiteral<given>;
+        never: $.isNever<given>;
 
-        assign: $.is<given, expected>;
-        accept: $.is<expected, given>;
+        assign: $.isAssignable<given, expected>;
+        accept: $.isAssignable<expected, given>;
         equal: $.equals<given, expected>;
         extend: $.doesExtend<given, expected>;
         extendedBy: $.doesExtend<expected, given>;
@@ -94,6 +95,7 @@ export declare namespace _ {
     export type toBeNullish = check<unknown, "nullish">;
     export type toBePrimitive = check<unknown, "primitive">;
     export type toBeLiteral = check<unknown, "literal">;
+    export type toBeNever = check<unknown, "never">;
 
     // general
     export type toBeTruthy = check<unknown, "truthy">;
@@ -135,6 +137,7 @@ export declare namespace _ {
         export type toBeNewable = negativeCheck<_.toBeNewable>;
         export type toBePrimitive = negativeCheck<_.toBePrimitive>;
         export type toBeLiteral = negativeCheck<_.toBeLiteral>;
+        export type toBeNever = negativeCheck<_.toBeNever>;
 
         export type toStartWith<T extends string> = negativeCheck<_.toStartWith<T>>;
         export type toEndWith<T extends string> = negativeCheck<_.toEndWith<T>>;
@@ -226,6 +229,12 @@ export declare namespace _ {
     > = given extends Array<any>
         ? _expect<given[number], payload>
         : _expect<given[keyof given], payload>;
+
+    export type expectFieldOf<
+        given extends { [key: keyof any]: any } | Array<any>,
+        field extends keyof given,
+        payload extends check<any, _checkType>
+    > = _expect<given[field], payload>;
 
     export {};
 }

@@ -41,16 +41,24 @@ type test_suit =
 Utilities mimic Jest's `expect` matchers, they are just a set of custom type definitions. It doesn't require you to install any additional tools or define your result expectations in comments for some parser to find. You just write a test and if check fails TS compiler will throw an error on that line, and your IDE will even highlight it.
 
 ```ts
-// MyTypes.ts
+// MyType.ts
 export type EventHandler = (type: string, data?: any) => boolean;
 
-// MyTypes.spec.ts
+// MyType.specd.ts
 import { _ } from "typed-well";
 
 type test_suit =
   | _<_.expect<EventHandler, _.toBeInvocable>>
   | _<_.expect<EventHandler, _.toAcceptArguments<[string, object]>>>
   | _<_.expect<EventHandler, _.toReturn<void>>>; // <-- error, this will be highlighted
+```
+
+### Running tests
+
+Since it only requires `tsc` to run there are many ways to execute your tests. They probably are already running via your IDE, but if you want them to run from command like you can put them in their own files (e.g. `MyType.specd.ts`) and just run `tsc` on them. Dont forget to exclude them from regular typescript compilation target.
+
+```bash
+tsc --strict --noEmit **/*.specd.ts
 ```
 
 ## API
@@ -84,6 +92,7 @@ type test_suit =
     - [`_.toBeNullish`](#-_tobenullish)
     - [`_.toBePrimitive`](#-_tobeprimitive)
     - [`_.toBeLiteral`](#-_tobeliteral)
+    - [`_.toBeNever`](#-_tobenever)
   - General
     - [`_.toBeTruthy`](#-_tobetruthy)
     - [`_.toBeFalsy`](#-_tobefalsy)
@@ -424,6 +433,21 @@ type suit =
   | _<_.expect<true, _.toBeLiteral>>
   | _<_.expect<false, _.toBeLiteral>>
   | _<_.expect<string, _.not.toBeLiteral>>;
+```
+
+[↥ To the listing](#api)
+
+## # `_.toBeNever`
+
+Given type should resolve to `never`
+
+```ts
+type suit =
+  | _<_.expect<never, _.toBeNever>>
+  | _<_.expect<"a", _.not.toBeNever>>
+  | _<_.expect<void, _.not.toBeNever>>
+  | _<_.expect<_.primitive, _.not.toBeNever>>
+  | _.fail<_.expect<never, _.not.toBeNever>>; // types are weird, you never know :)
 ```
 
 [↥ To the listing](#api)
