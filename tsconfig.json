@@ -11,12 +11,11 @@
     "target": "ES2019",
     "module": "commonjs",
     "moduleResolution": "node",
+    "rootDir": "src",
     "esModuleInterop": true,
     "outDir": "dist",
-    "declaration": true,
-    "noEmit": true
+    "declaration": true
   },
-  "include": [
-    "lib/**/*.ts", "test/**/*.spec.ts"],
-  "exclude": ["node_modules", "docs"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "test"]
 }

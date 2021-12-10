@@ -6,7 +6,7 @@ export declare type _<check extends true> = never;
 // TODO: figure out how to convert a union to a tuple and vice-versa
 // TODO: change false check resolves to a strings with explanations
 
-export declare namespace _ {
+export namespace _ {
     export type pass<condition extends true> = never;
     export type fail<condition extends false> = never;
 
@@ -236,5 +236,6 @@ export declare namespace _ {
         payload extends check<any, _checkType>
     > = _expect<given[field], payload>;
 
-    export {};
+    export function suit(description: string, context: (...ctx: any[]) => any) {}
+    export function test(name: string, context: (...ctx: any[]) => any) {}
 }
