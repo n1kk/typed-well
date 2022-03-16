@@ -1,5 +1,3 @@
-> Work in progress! Minor versions of v0 can have breaking api changes, lock this package to exact version or to the latest patch.
-
 # Typed-Well [![github repo](https://img.shields.io/github/package-json/v/n1kk/typed-well?color=informational&label=github&logo=github)](https://github.com/n1kk/typed-well) [![npm package](https://img.shields.io/npm/v/typed-well?color=informational&logo=npm)](https://www.npmjs.com/package/typed-well)
 
 Realtime, zero dependency, human-readable library to write unit tests for your TypeScript definitions. Think of it as Jest for types with no extra tooling required.
