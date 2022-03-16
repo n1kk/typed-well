@@ -11,11 +11,14 @@
     "target": "ES2019",
     "module": "commonjs",
     "moduleResolution": "node",
-    "rootDir": "src",
     "esModuleInterop": true,
     "outDir": "dist",
-    "declaration": true
+    "declaration": true,
+    "paths": {
+      "typed-well": ["./src"],
+      "typed-well/*": ["./src/*"],
+    }
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "assets/example1.ts"],
   "exclude": ["node_modules", "test"]
 }
