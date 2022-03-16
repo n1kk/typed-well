@@ -14,9 +14,6 @@ type test_suit =
     | `you can explicitly state if you expect test to pass or fail`
     | _.pass<expect<EventHandler, to.acceptParameters<[string, undefined]>>>
     | _.fail<expect<EventHandler, to.acceptParameters<[symbol]>>>
-    | "your IDE will highlight tests that do not pass"
-    | _<expect<EventHandler, to.returnType<number>>>
-    | _<expect<EventHandler, to.returnType<string>>>
     | `negative checks available via " to.not" namespace`
     | _<expect<EventHandler, to.not.returnType<void | undefined>>>
     | _<expect<EventHandler, to.not.beAssignableTo<symbol>>>
