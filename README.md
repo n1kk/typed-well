@@ -4,9 +4,8 @@
 
 Realtime, zero dependency, human-readable library to write unit tests for your TypeScript definitions. Think of it as Jest for types with no extra tooling required.
 
-<!--suppress HtmlDeprecatedAttribute -->
 <p align="center">
-    <img src="https://github.com/n1kk/typed-well/raw/master/assets/demo1.apng" alt="demo">
+    <img src="https://github.com/n1kk/typed-well/raw/master/assets/demo1.gif" alt="demo">
 </p>
 
 ## Installation
@@ -48,9 +47,9 @@ export type EventHandler = (type: string, data?: any) => boolean;
 import { _ } from "typed-well";
 
 type test_suit =
-  | _<_.expect<EventHandler, _.toBeInvocable>>
-  | _<_.expect<EventHandler, _.toAcceptArguments<[string, object]>>>
-  | _<_.expect<EventHandler, _.toReturn<void>>>; // <-- error, this will be highlighted
+  | _<expect<EventHandler, to.beInvocable>>
+  | _<expect<EventHandler, to.acceptArguments<[string, object]>>>
+  | _<expect<EventHandler, to.returnType<void>>>; // <-- error, this will be highlighted
 ```
 
 ### Running tests
@@ -69,60 +68,60 @@ tsc --strict --noEmit **/*.specd.ts
   - [`_.fail< test >`](#-_fail-test-)
   - [`_.not`](#-_not)
 - Expectations
-  - [`_.expect< given, check >`](#-_expect-given-check-)
-  - [`_.expectReturnOf< given, check >`](#-_expectreturnof-given-check-)
-  - [`_.expectParametersOf< given, check >`](#-_expectparametersof-given-check-)
-  - [`_.expectKeysOf< given, check >`](#-_expectkeysof-given-check-)
-  - [`_.expectValuesOf< given, check >`](#-_expectvaluesof-given-check-)
+  - [`expect< given, check >`](#-expect-given-check-)
+  - [`expectReturnOf< given, check >`](#-expectreturnof-given-check-)
+  - [`expectParametersOf< given, check >`](#-expectparametersof-given-check-)
+  - [`expectKeysOf< given, check >`](#-expectkeysof-given-check-)
+  - [`expectValuesOf< given, check >`](#-expectvaluesof-given-check-)
 - Utils
   - [`_.falsy`](#-_falsy)
   - [`_.primitive`](#-_primitive)
   - [`_.nullish`](#-_nullish)
 - Checks
   - Comparison
-    - [`_.toEqualTo< expected >`](#-_toequalto-expected-)
-    - [`_.toBe< expected >`](#-_tobe-expected-)
-    - [`_.toAccept< expected >`](#-_toaccept-expected-)
-    - [`_.toBeAssignableTo< expected >`](#-_tobeassignableto-expected-)
-    - [`_.toExtend< expected >`](#-_toextend-expected-)
-    - [`_.toBeExtendedBy< expected >`](#-_tobeextendedby-expected-)
+    - [`to.equalTo< expected >`](#-toequalto-expected-)
+    - [`to.be< expected >`](#-tobe-expected-)
+    - [`to.accept< expected >`](#-toaccept-expected-)
+    - [`to.beAssignableTo< expected >`](#-tobeassignableto-expected-)
+    - [`to.extend< expected >`](#-toextend-expected-)
+    - [`to.beExtendedBy< expected >`](#-tobeextendedby-expected-)
   - Primitives
-    - [`_.toBeDefined`](#-_tobedefined)
-    - [`_.toBeOptional`](#-_tobeoptional)
-    - [`_.toBeNullish`](#-_tobenullish)
-    - [`_.toBePrimitive`](#-_tobeprimitive)
-    - [`_.toBeLiteral`](#-_tobeliteral)
-    - [`_.toBeNever`](#-_tobenever)
+    - [`to.beDefined`](#-tobedefined)
+    - [`to.beOptional`](#-tobeoptional)
+    - [`to.beNullish`](#-tobenullish)
+    - [`to.bePrimitive`](#-tobeprimitive)
+    - [`to.beLiteral`](#-tobeliteral)
+    - [`to.beNever`](#-tobenever)
   - General
-    - [`_.toBeTruthy`](#-_tobetruthy)
-    - [`_.toBeFalsy`](#-_tobefalsy)
-    - [`_.toBeInvocable`](#-_tobeinvocable)
-    - [`_.toBeNewable`](#-_tobenewable)
+    - [`to.beTruthy`](#-tobetruthy)
+    - [`to.beFalsy`](#-tobefalsy)
+    - [`to.beInvocable`](#-tobeinvocable)
+    - [`to.beNewable`](#-tobenewable)
   - Strings
-    - [`_.toStartWith< expected >`](#-_tostartwith-expected-)
-    - [`_.toEndWith< expected >`](#-_toendwith-expected-)
-    - [`_.toContain< expected >`](#-_tocontain-expected-)
+    - [`to.startWith< expected >`](#-tostartwith-expected-)
+    - [`to.endWith< expected >`](#-toendwith-expected-)
+    - [`to.contain< expected >`](#-tocontain-expected-)
   - Objects
-    - [`_.toHaveKeys< expected >`](#-_tohavekeys-expected-)
-    - [`_.toHaveOnlyKeys< expected >`](#-_tohaveonlykeys-expected-)
-    - [`_.toHaveFieldsThatAccept< expected >`](#-_tohavefieldsthataccept-expected-)
-    - [`_.toHaveFieldsThatAcceptOnly< expected >`](#-_tohavefieldsthatacceptonly-expected-)
+    - [`to.haveKeys< expected >`](#-tohavekeys-expected-)
+    - [`to.haveOnlyKeys< expected >`](#-tohaveonlykeys-expected-)
+    - [`to.haveFieldsThatAccept< expected >`](#-tohavefieldsthataccept-expected-)
+    - [`to.haveFieldsThatAcceptOnly< expected >`](#-tohavefieldsthatacceptonly-expected-)
   - Arrays
-    - [`_.toInclude< expected >`](#-_toinclude-expected-)
+    - [`to.include< expected >`](#-toinclude-expected-)
   - Functions
-    - [`_.toReturn< expected >`](#-_toreturn-expected-)
-    - [`_.toReturnOnly< expected >`](#-_toreturnonly-expected-)
-    - [`_.toResolveTo< expected >`](#-_toresolveto-expected-)
-    - [`_.toResolveToOnly< expected >`](#-_toresolvetoonly-expected-)
-    - [`_.toAcceptParameters< expected >`](#-_toacceptparameters-expected-)
-    - [`_.toAcceptOnlyParameters< expected >`](#-_toacceptonlyparameters-expected-)
+    - [`to.returnType< expected >`](#-toreturn-expected-)
+    - [`to.returnTypeOnly< expected >`](#-toreturnonly-expected-)
+    - [`to.resolveTo< expected >`](#-toresolveto-expected-)
+    - [`to.resolveToOnly< expected >`](#-toresolvetoonly-expected-)
+    - [`to.acceptParameters< expected >`](#-toacceptparameters-expected-)
+    - [`to.acceptOnlyParameters< expected >`](#-toacceptonlyparameters-expected-)
 
 ## # `_< test >`
 
 Shortcut to a positive assertion [`_.pass< expectation >`](#-_pass-test-). Expects check type to resolve to `true`.
 
 ```ts
-type test = _<_.expect<"a", _.toBeAssignableTo<string>>>;
+type test = _<expect<"a", to.beAssignableTo<string>>>;
 ```
 
 [↥ To the listing](#api)
@@ -132,7 +131,7 @@ type test = _<_.expect<"a", _.toBeAssignableTo<string>>>;
 Positive assertion. Expects check type to resolve to `true`.
 
 ```ts
-type test = _.pass<_.expect<"a", _.toBeAssignableTo<string>>>;
+type test = _.pass<expect<"a", to.beAssignableTo<string>>>;
 ```
 
 [↥ To the listing](#api)
@@ -142,7 +141,7 @@ type test = _.pass<_.expect<"a", _.toBeAssignableTo<string>>>;
 Negative assertion. Expects check type to resolve to `false`.
 
 ```ts
-type test = _.fail<_.expect<"a", _.toBeAssignableTo<number>>>;
+type test = _.fail<expect<"a", to.beAssignableTo<number>>>;
 ```
 
 [↥ To the listing](#api)
@@ -153,76 +152,79 @@ Negates the checks. It's a namespace that contains aliases to all the check type
 
 ```ts
 type suit =
-  | _<_.expect<number, _.not.toAccept<"foo">>>
-  | _<_.expect<void, _.not.toBeDefined>>
+  | _<expect<number, to.not.accept<"foo">>>
+  | _<expect<void, to.not.beDefined>>
   // same as above
-  | _.fail<_.expect<void, _.toBeDefined>>
-  | _.fail<_.expect<number, _.toAccept<"foo">>>;
+  | _.fail<expect<void, to.beDefined>>
+  | _.fail<expect<number, to.accept<"foo">>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.expect< given, check >`
+## # `expect< given, check >`
 
 Runs a check against a given type and resolves in the checks boolean result: `true` if check passes and `false` if it fails.
 
 ```ts
-type result2 = _.expect<1, _.toBeTruthy>; // result1 is of type `true`
-type result1 = _.expect<0, _.toBeTruthy>; // result1 is of type `false`
+type result2 = expect<1, to.beTruthy>; // result1 is of type `true`
+type result1 = expect<0, to.beTruthy>; // result1 is of type `false`
 
 type suit =
   | _<result2> // passes
-  | _<result1>; // fails
+  | _<result1> // fails
+  // same as above
+  | _<expect<1, to.beTruthy>> // passes
+  | _<expect<0, to.beTruthy>>; // fails
 ```
 
 [↥ To the listing](#api)
 
-## # `_.expectReturnOf< given, check >`
+## # `expectReturnOf< given, check >`
 
-Expects given to be a function and runs the check on its return value. Shortcut for `_.expect<ReturnType<given>, check>`
+Expects given to be a function and runs the check on its return value. Shortcut for `expect<ReturnType<given>, check>`
 
 ```ts
 type suit =
-  | _<_.expectReturnOf<() => string, _.toAccept<"foo">>>
+  | _<expectReturnOf<() => string, to.accept<"foo">>>
   // same as above
-  | _<_.expect<ReturnType<() => string>, _.toAccept<"foo">>>;
+  | _<expect<ReturnType<() => string>, to.accept<"foo">>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.expectParametersOf< given, check >`
+## # `expectParametersOf< given, check >`
 
-Expects given to be a function and runs the check on its parameters type. Shortcut for `_.expect<Parameters<given>, check>`
+Expects given to be a function and runs the check on its parameters type. Shortcut for `expect<Parameters<given>, check>`
 
 ```ts
 type suit =
-  | _<_.expectParametersOf<(a: string, b?: number) => string, _.toAccept<[string]>>>
-  | _<_.expectParametersOf<(a: string, b?: number) => string, _.toAccept<[string, number]>>>
-  | _<_.expectParametersOf<(a: string, b?: number) => string, _.toAccept<[string, undefined]>>>
+  | _<expectParametersOf<(a: string, b?: number) => string, to.accept<[string]>>>
+  | _<expectParametersOf<(a: string, b?: number) => string, to.accept<[string, number]>>>
+  | _<expectParametersOf<(a: string, b?: number) => string, to.accept<[string, undefined]>>>
   // same as above
-  | _<_.expect<Parameters<(a: string, b?: number) => string>, _.toAccept<[string]>>>
-  | _<_.expect<Parameters<(a: string, b?: number) => string>, _.toAccept<[string, number]>>>
-  | _<_.expect<Parameters<(a: string, b?: number) => string>, _.toAccept<[string, undefined]>>>;
+  | _<expect<Parameters<(a: string, b?: number) => string>, to.accept<[string]>>>
+  | _<expect<Parameters<(a: string, b?: number) => string>, to.accept<[string, number]>>>
+  | _<expect<Parameters<(a: string, b?: number) => string>, to.accept<[string, undefined]>>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.expectKeysOf< given, check >`
+## # `expectKeysOf< given, check >`
 
-Expects given to be an object and runs the check on its keys. Shortcut for `_.expect<keyof given, check>`
+Expects given to be an object and runs the check on its keys. Shortcut for `expect<keyof given, check>`
 
 ```ts
 type suit =
-  | _<_.expectKeysOf<{ a: string; b?: number }, _.toBe<"a" | "b">>>
+  | _<expectKeysOf<{ a: string; b?: number }, to.be<"a" | "b">>>
   // same as above
-  | _<_.expect<keyof { a: string; b?: number }, _.toBe<"a" | "b">>>;
+  | _<expect<keyof { a: string; b?: number }, to.be<"a" | "b">>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.expectValuesOf< given, check >`
+## # `expectValuesOf< given, check >`
 
-Expects given to be an object or an array or a tuple and runs the check on its value types. Shortcut for `_.expect<given[keyof given], check>`
+Expects given to be an object or an array or a tuple and runs the check on its value types. Shortcut for `expect<given[keyof given], check>`
 
 ```ts
 type MyObject = { a: string; b?: number };
@@ -230,13 +232,13 @@ type MyArray = Array<boolean>;
 type MyTuple = [index: number, value: string];
 
 type suit =
-  | _<_.expectValuesOf<MyObject, _.toBe<string | number | undefined>>>
-  | _<_.expectValuesOf<MyArray, _.toAccept<true>>>
-  | _<_.expectValuesOf<MyTuple, _.toAccept<number | string>>>
+  | _<expectValuesOf<MyObject, to.be<string | number | undefined>>>
+  | _<expectValuesOf<MyArray, to.accept<true>>>
+  | _<expectValuesOf<MyTuple, to.accept<number | string>>>
   // same as above
-  | _<_.expect<MyObject[keyof MyObject], _.toBe<string | number | undefined>>>
-  | _<_.expect<MyArray[number], _.toAccept<true>>>
-  | _<_.expect<MyTuple[number], _.toAccept<number | string>>>;
+  | _<expect<MyObject[keyof MyObject], to.be<string | number | undefined>>>
+  | _<expect<MyArray[number], to.accept<true>>>
+  | _<expect<MyTuple[number], to.accept<number | string>>>;
 ```
 
 [↥ To the listing](#api)
@@ -271,7 +273,7 @@ export type nullish = null | undefined | void;
 
 [↥ To the listing](#api)
 
-## # `_.toEqualTo< expected >`
+## # `to.equalTo< expected >`
 
 Given type should strictly equal to expected one. Both types should be assignable to each other.
 
@@ -279,462 +281,462 @@ Given type should strictly equal to expected one. Both types should be assignabl
 type MyType = number;
 
 type suit =
-  | _<_.expect<MyType, _.toEqualTo<number>>>
-  | _<_.expect<MyType, _.not.toEqualTo<1>>>
-  | _<_.expect<MyType, _.not.toEqualTo<string>>>
-  | _<_.expect<MyType, _.not.toEqualTo<"1">>>;
+  | _<expect<MyType, to.equalTo<number>>>
+  | _<expect<MyType, to.not.equalTo<1>>>
+  | _<expect<MyType, to.not.equalTo<string>>>
+  | _<expect<MyType, to.not.equalTo<"1">>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toBe< expected >`
+## # `to.be< expected >`
 
-Given type should strictly equal to expected one. Both types should be assignable to each other. Alias for [`_.toEqualTo< expected >`](#-_toequalto-expected-)
+Given type should strictly equal to expected one. Both types should be assignable to each other. Alias for [`to.equalTo< expected >`](#-toequalto-expected-)
 
 ```ts
 type MyType = number;
 
 type suit =
-  | _<_.expect<MyType, _.toBe<number>>>
-  | _<_.expect<MyType, _.not.toBe<1>>>
-  | _<_.expect<MyType, _.not.toBe<string>>>
-  | _<_.expect<MyType, _.not.toBe<"1">>>;
+  | _<expect<MyType, to.be<number>>>
+  | _<expect<MyType, to.not.be<1>>>
+  | _<expect<MyType, to.not.be<string>>>
+  | _<expect<MyType, to.not.be<"1">>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toAccept< expected >`
+## # `to.accept< expected >`
 
-Expected type should be assignable to a given one, bot not necessarily the other way around. Reverse of [`_.toBeAssignableTo< expected >`](#-_tobeassignableto-expected-).
+Expected type should be assignable to a given one, bot not necessarily the other way around. Reverse of [`to.beAssignableTo< expected >`](#-tobeassignableto-expected-).
 
 ```ts
 type suit =
-  | _<_.expect<number, _.toAccept<1>>>
-  | _<_.expect<1, _.not.toAccept<number>>>
-  | _<_.expect<number | string, _.toAccept<number>>>
-  | _<_.expect<number, _.not.toAccept<number | string>>>;
+  | _<expect<number, to.accept<1>>>
+  | _<expect<1, to.not.accept<number>>>
+  | _<expect<number | string, to.accept<number>>>
+  | _<expect<number, to.not.accept<number | string>>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toBeAssignableTo< expected >`
+## # `to.beAssignableTo< expected >`
 
-Given type should be assignable to the expected one, bot not necessarily the other way around. Reverse of [`_.toAccept< expected >`](#-_toaccept-expected-).
+Given type should be assignable to the expected one, bot not necessarily the other way around. Reverse of [`to.accept< expected >`](#-toaccept-expected-).
 
 ```ts
 type suit =
-  | _<_.expect<number, _.toAccept<1>>>
-  | _<_.expect<1, _.not.toAccept<number>>>
-  | _<_.expect<number | string, _.toAccept<number>>>
-  | _<_.expect<number, _.not.toAccept<number | string>>>;
+  | _<expect<number, to.accept<1>>>
+  | _<expect<1, to.not.accept<number>>>
+  | _<expect<number | string, to.accept<number>>>
+  | _<expect<number, to.not.accept<number | string>>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toExtend< expected >`
+## # `to.extend< expected >`
 
-Expected type is assignable to given but not the other way around. Means that given type is a superset of the expected one. Reverse of [`_.toBeExtendedBy< expected >`](#-_tobeextendedby-expected-).
+Expected type is assignable to given but not the other way around. Means that given type is a superset of the expected one. Reverse of [`to.beExtendedBy< expected >`](#-tobeextendedby-expected-).
 
 ```ts
 type suit =
-  | _<_.expect<1, _.toExtend<number>>>
-  | _<_.expect<"a", _.toExtend<string>>>
-  | _<_.expect<() => number, _.toExtend<Function>>>
-  | _<_.expect<{ a: string; b: number }, _.toExtend<{ a: string }>>>;
+  | _<expect<1, to.extend<number>>>
+  | _<expect<"a", to.extend<string>>>
+  | _<expect<() => number, to.extend<Function>>>
+  | _<expect<{ a: string; b: number }, to.extend<{ a: string }>>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toBeExtendedBy< expected >`
+## # `to.beExtendedBy< expected >`
 
-Given type is assignable to expected but not the other way around. Means that expected type is a superset of the given one. Reverse of [`_.toExtend< expected >`](#-_toextend-expected-).
+Given type is assignable to expected but not the other way around. Means that expected type is a superset of the given one. Reverse of [`to.extend< expected >`](#-toextend-expected-).
 
 ```ts
 type suit =
-  | _<_.expect<number, _.toBeExtendedBy<1>>>
-  | _<_.expect<string>, _.toBeExtendedBy<"a">>
-  | _<_.expect<Function, _.toBeExtendedBy<() => number>>>
-  | _<_.expect<{ a: string }, _.toBeExtendedBy<{ a: string; b: number }>>>;
+  | _<expect<number, to.beExtendedBy<1>>>
+  | _<expect<string>, to.beExtendedBy<"a">>
+  | _<expect<Function, to.beExtendedBy<() => number>>>
+  | _<expect<{ a: string }, to.beExtendedBy<{ a: string; b: number }>>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toBeDefined`
+## # `to.beDefined`
 
 Given type does not accept `undefined | void`
 
 ```ts
 type suit =
-  | _<_.expect<number, _.toBeDefined>>
-  | _<_.expect<string, _.toBeDefined>>
-  | _<_.expect<Function, _.toBeDefined>>
-  | _<_.expect<null, _.toBeDefined>>
-  | _<_.expect<undefined, _.not.toBeDefined>>
-  | _<_.expect<void, _.not.toBeDefined>>
-  | _<_.expect<never, _.not.toBeDefined>>;
+  | _<expect<number, to.beDefined>>
+  | _<expect<string, to.beDefined>>
+  | _<expect<Function, to.beDefined>>
+  | _<expect<null, to.beDefined>>
+  | _<expect<undefined, to.not.beDefined>>
+  | _<expect<void, to.not.beDefined>>
+  | _<expect<never, to.not.beDefined>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toBeOptional`
+## # `to.beOptional`
 
-Given type does can accept `undefined`. Reverse of [`_.toBeDefined`](#-_tobedefined)
+Given type does can accept `undefined`. Reverse of [`to.beDefined`](#-tobedefined)
 
 ```ts
 type suit =
-  | _<_.expect<undefined | number, _.toBeOptional>>
-  | _<_.expect<undefined, _.toBeOptional>>
-  | _<_.expect<void, _.toBeOptional>>
-  | _<_.expect<number, _.not.toBeOptional>>
-  | _<_.expect<"", _.not.toBeOptional>>
-  | _<_.expect<false, _.not.toBeOptional>>;
+  | _<expect<undefined | number, to.beOptional>>
+  | _<expect<undefined, to.beOptional>>
+  | _<expect<void, to.beOptional>>
+  | _<expect<number, to.not.beOptional>>
+  | _<expect<"", to.not.beOptional>>
+  | _<expect<false, to.not.beOptional>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toBeNullish`
+## # `to.beNullish`
 
 Given type can accept `null | undefined`
 
 ```ts
 type suit =
-  | _<_.expect<null, _.toBeNullish>>
-  | _<_.expect<undefined, _.toBeNullish>>
-  | _<_.expect<void, _.toBeNullish>>
-  | _<_.expect<number, _.not.toBeNullish>>
-  | _<_.expect<() => void, _.not.toBeNullish>>;
+  | _<expect<null, to.beNullish>>
+  | _<expect<undefined, to.beNullish>>
+  | _<expect<void, to.beNullish>>
+  | _<expect<number, to.not.beNullish>>
+  | _<expect<() => void, to.not.beNullish>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toBePrimitive`
+## # `to.bePrimitive`
 
 Given type can be assigned to one of the primitive types `string | number | bigint | boolean | symbol | null | undefined`
 
 ```ts
 type suit =
-  | _<_.expect<null, _.toBeNullish>>
-  | _<_.expect<undefined, _.toBeNullish>>
-  | _<_.expect<void, _.toBeNullish>>
-  | _<_.expect<number, _.not.toBeNullish>>
-  | _<_.expect<() => void, _.not.toBeNullish>>;
+  | _<expect<null, to.beNullish>>
+  | _<expect<undefined, to.beNullish>>
+  | _<expect<void, to.beNullish>>
+  | _<expect<number, to.not.beNullish>>
+  | _<expect<() => void, to.not.beNullish>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toBeLiteral`
+## # `to.beLiteral`
 
 Given type is a literal which means it extends one of these primitives: `number | string | boolean`
 
 ```ts
 type suit =
-  | _<_.expect<1, _.toBeLiteral>>
-  | _<_.expect<"foo", _.toBeLiteral>>
-  | _<_.expect<true, _.toBeLiteral>>
-  | _<_.expect<false, _.toBeLiteral>>
-  | _<_.expect<string, _.not.toBeLiteral>>;
+  | _<expect<1, to.beLiteral>>
+  | _<expect<"foo", to.beLiteral>>
+  | _<expect<true, to.beLiteral>>
+  | _<expect<false, to.beLiteral>>
+  | _<expect<string, to.not.beLiteral>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toBeNever`
+## # `to.beNever`
 
 Given type should resolve to `never`
 
 ```ts
 type suit =
-  | _<_.expect<never, _.toBeNever>>
-  | _<_.expect<"a", _.not.toBeNever>>
-  | _<_.expect<void, _.not.toBeNever>>
-  | _<_.expect<_.primitive, _.not.toBeNever>>
-  | _.fail<_.expect<never, _.not.toBeNever>>; // types are weird, you never know :)
+  | _<expect<never, to.beNever>>
+  | _<expect<"a", to.not.beNever>>
+  | _<expect<void, to.not.beNever>>
+  | _<expect<_.primitive, to.not.beNever>>
+  | _.fail<expect<never, to.not.beNever>>; // types are weird, you never know :)
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toBeTruthy`
+## # `to.beTruthy`
 
 Given type can contain only truthy values, this means it's not compatible with falsy values and their supersets. Since `0` is falsy `number` can't be considered a truthy type since it can accept `0`.
 
 ```ts
 type suit =
-  | _<_.expect<1, _.toBeTruthy>>
-  | _<_.expect<"foo", _.toBeTruthy>>
-  | _<_.expect<true, _.toBeTruthy>>
-  | _<_.expect<{ a: any }, _.toBeTruthy>>
-  | _<_.expect<() => void, _.toBeTruthy>>
-  | _<_.expect<false, _.not.toBeTruthy>>
-  | _<_.expect<number, _.not.toBeTruthy>>
-  | _<_.expect<boolean, _.not.toBeTruthy>>;
+  | _<expect<1, to.beTruthy>>
+  | _<expect<"foo", to.beTruthy>>
+  | _<expect<true, to.beTruthy>>
+  | _<expect<{ a: any }, to.beTruthy>>
+  | _<expect<() => void, to.beTruthy>>
+  | _<expect<false, to.not.beTruthy>>
+  | _<expect<number, to.not.beTruthy>>
+  | _<expect<boolean, to.not.beTruthy>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toBeFalsy`
+## # `to.beFalsy`
 
 Given type can contain only a falsy value: `false | "" | 0 | 0n | null | undefined | void`. Type that can hold falsy and truthy value at the same time, like an optional field, can not be considered falsy.
 
 ```ts
 type suit =
-  | _<_.expect<false, _.toBeFalsy>>
-  | _<_.expect<0, _.toBeFalsy>>
-  | _<_.expect<null, _.toBeFalsy>>
-  | _<_.expect<"", _.toBeFalsy>>
-  | _<_.expect<boolean, _.not.toBeFalsy>>
-  | _<_.expect<number | undefined, _.not.toBeFalsy>>;
+  | _<expect<false, to.beFalsy>>
+  | _<expect<0, to.beFalsy>>
+  | _<expect<null, to.beFalsy>>
+  | _<expect<"", to.beFalsy>>
+  | _<expect<boolean, to.not.beFalsy>>
+  | _<expect<number | undefined, to.not.beFalsy>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toBeInvocable`
+## # `to.beInvocable`
 
 Given type can be invoked like a function.
 
 ```ts
 type suit =
-  | _<_.expect<() => any, _.toBeInvocable>>
-  | _<_.expect<Function, _.toBeInvocable>>
-  | _<_.expect<{ (...args: any[]): void }, _.toBeInvocable>>
-  | _<_.expect<number, _.not.toBeInvocable>>
-  | _<_.expect<unknown, _.not.toBeInvocable>>;
+  | _<expect<() => any, to.beInvocable>>
+  | _<expect<Function, to.beInvocable>>
+  | _<expect<{ (...args: any[]): void }, to.beInvocable>>
+  | _<expect<number, to.not.beInvocable>>
+  | _<expect<unknown, to.not.beInvocable>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toBeNewable`
+## # `to.beNewable`
 
 Given type is a constructor and can be instantiated with the `new` keyword.
 
 ```ts
 class EmptyClass {}
 type suit =
-  | _<_.expect<typeof EmptyClass, _.toBeNewable>>
-  | _<_.expect<typeof RegExp, _.toBeNewable>>
-  | _<_.expect<RegExp, _.not.toBeNewable>>
-  | _<_.expect<{ new (arg: number): boolean }, _.toBeNewable>>
-  | _<_.expect<() => object, _.not.toBeNewable>>
-  | _<_.expect<{ (arg: number): boolean }, _.not.toBeNewable>>
-  | _<_.expect<object, _.not.toBeNewable>>
-  | _<_.expect<unknown, _.not.toBeNewable>>;
+  | _<expect<typeof EmptyClass, to.beNewable>>
+  | _<expect<typeof RegExp, to.beNewable>>
+  | _<expect<RegExp, to.not.beNewable>>
+  | _<expect<{ new (arg: number): boolean }, to.beNewable>>
+  | _<expect<() => object, to.not.beNewable>>
+  | _<expect<{ (arg: number): boolean }, to.not.beNewable>>
+  | _<expect<object, to.not.beNewable>>
+  | _<expect<unknown, to.not.beNewable>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toStartWith< expected >`
+## # `to.startWith< expected >`
 
 Given and expected types are strings and given is prefixed with expected.
 
 ```ts
 type suit =
-  | _<_.expect<"foobar", _.toStartWith<"foo">>>
-  | _<_.expect<"baz", _.toStartWith<"">>>
-  | _<_.expect<"foo", _.not.toStartWith<"bar">>>;
+  | _<expect<"foobar", to.startWith<"foo">>>
+  | _<expect<"baz", to.startWith<"">>>
+  | _<expect<"foo", to.not.startWith<"bar">>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toEndWith< expected >`
+## # `to.endWith< expected >`
 
 Given and expected types are strings and given is suffixed with expected.
 
 ```ts
 type suit =
-  | _<_.expect<"foobar", _.toEndWith<"bar">>>
-  | _<_.expect<"baz", _.toEndWith<"">>>
-  | _<_.expect<"foo", _.not.toEndWith<"bar">>>;
+  | _<expect<"foobar", to.endWith<"bar">>>
+  | _<expect<"baz", to.endWith<"">>>
+  | _<expect<"foo", to.not.endWith<"bar">>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toContain< expected >`
+## # `to.contain< expected >`
 
 Given and expected types are strings and expected is a substring of the given.
 
 ```ts
 type suit =
-  | _<_.expect<"foobar", _.toEndWith<"bar">>>
-  | _<_.expect<"baz", _.toEndWith<"">>>
-  | _<_.expect<"foo", _.not.toEndWith<"bar">>>;
+  | _<expect<"foobar", to.endWith<"bar">>>
+  | _<expect<"baz", to.endWith<"">>>
+  | _<expect<"foo", to.not.endWith<"bar">>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toHaveKeys< expected >`
+## # `to.haveKeys< expected >`
 
 Given is an object that should contain expected keys.
 
 ```ts
 type suit =
-  | _<_.expect<{ a: number }, _.toHaveKeys<"a">>>
-  | _<_.expect<{ a: number; b: string }, _.toHaveKeys<"a">>>
-  | _<_.expect<{ a: number; b: string }, _.toHaveKeys<"b">>>
-  | _<_.expect<{ a: number; b: string }, _.toHaveKeys<"a" | "b">>>
-  | _<_.expect<object, _.not.toHaveKeys<"a">>>;
+  | _<expect<{ a: number }, to.haveKeys<"a">>>
+  | _<expect<{ a: number; b: string }, to.haveKeys<"a">>>
+  | _<expect<{ a: number; b: string }, to.haveKeys<"b">>>
+  | _<expect<{ a: number; b: string }, to.haveKeys<"a" | "b">>>
+  | _<expect<object, to.not.haveKeys<"a">>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toHaveOnlyKeys< expected >`
+## # `to.haveOnlyKeys< expected >`
 
 Given is an object that should only contain expected keys.
 
 ```ts
 type suit =
-  | _<_.expect<{ a: number }, _.toHaveOnlyKeys<"a">>>
-  | _<_.expect<{ a: number; b: string }, _.not.toHaveOnlyKeys<"a">>>
-  | _<_.expect<{ a: number; b: string }, _.not.toHaveOnlyKeys<"b">>>
-  | _<_.expect<{ a: number; b: string }, _.toHaveOnlyKeys<"a" | "b">>>;
+  | _<expect<{ a: number }, to.haveOnlyKeys<"a">>>
+  | _<expect<{ a: number; b: string }, to.not.haveOnlyKeys<"a">>>
+  | _<expect<{ a: number; b: string }, to.not.haveOnlyKeys<"b">>>
+  | _<expect<{ a: number; b: string }, to.haveOnlyKeys<"a" | "b">>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toHaveFieldsThatAccept< expected >`
+## # `to.haveFieldsThatAccept< expected >`
 
 Given is an object with fields that accept expected value types.
 
 ```ts
 type suit =
-  | _<_.expect<{ a: number; b: string }, _.toHaveFieldsThatAccept<number | string>>>
-  | _<_.expect<{ a: number; b: string }, _.toHaveFieldsThatAccept<"foo">>>
-  | _<_.expect<{ a: number; b: string }, _.toHaveFieldsThatAccept<1>>>
-  | _<_.expect<{ a: number; b: string }, _.toHaveFieldsThatAccept<1 | "foo">>>
-  | _<_.expect<{ a: number; b?: string }, _.toHaveFieldsThatAccept<undefined>>>
-  | _<_.expect<{ a: number; b?: string }, _.not.toHaveFieldsThatAccept<boolean>>>
-  | _<_.expect<{ a: number; b?: string }, _.not.toHaveFieldsThatAccept<number | string | boolean>>>;
+  | _<expect<{ a: number; b: string }, to.haveFieldsThatAccept<number | string>>>
+  | _<expect<{ a: number; b: string }, to.haveFieldsThatAccept<"foo">>>
+  | _<expect<{ a: number; b: string }, to.haveFieldsThatAccept<1>>>
+  | _<expect<{ a: number; b: string }, to.haveFieldsThatAccept<1 | "foo">>>
+  | _<expect<{ a: number; b?: string }, to.haveFieldsThatAccept<undefined>>>
+  | _<expect<{ a: number; b?: string }, to.not.haveFieldsThatAccept<boolean>>>
+  | _<expect<{ a: number; b?: string }, to.not.haveFieldsThatAccept<number | string | boolean>>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toHaveFieldsThatAcceptOnly< expected >`
+## # `to.haveFieldsThatAcceptOnly< expected >`
 
 Given is an object with fields that accept only expected value types.
 
 ```ts
 type suit =
-  | _<_.expect<{ a: number; b: string }, _.toHaveFieldsThatAcceptOnly<number | string>>>
-  | _<_.expect<{ a: number; b: string }, _.not.toHaveFieldsThatAcceptOnly<"foo">>>
-  | _<_.expect<{ a: number; b: string }, _.not.toHaveFieldsThatAcceptOnly<1>>>
-  | _<_.expect<{ a: number; b: string }, _.not.toHaveFieldsThatAcceptOnly<1 | "foo">>>
-  | _<_.expect<{ a: number; b?: string }, _.not.toHaveFieldsThatAcceptOnly<undefined>>>
-  | _<_.expect<{ a: number; b?: string }, _.not.toHaveFieldsThatAcceptOnly<boolean>>>
-  | _<_.expect<{ a: number; b?: string }, _.not.toHaveFieldsThatAccept<number | string | boolean>>>;
+  | _<expect<{ a: number; b: string }, to.haveFieldsThatAcceptOnly<number | string>>>
+  | _<expect<{ a: number; b: string }, to.not.haveFieldsThatAcceptOnly<"foo">>>
+  | _<expect<{ a: number; b: string }, to.not.haveFieldsThatAcceptOnly<1>>>
+  | _<expect<{ a: number; b: string }, to.not.haveFieldsThatAcceptOnly<1 | "foo">>>
+  | _<expect<{ a: number; b?: string }, to.not.haveFieldsThatAcceptOnly<undefined>>>
+  | _<expect<{ a: number; b?: string }, to.not.haveFieldsThatAcceptOnly<boolean>>>
+  | _<expect<{ a: number; b?: string }, to.not.haveFieldsThatAccept<number | string | boolean>>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toInclude< expected >`
+## # `to.include< expected >`
 
 Given is an array that can contain the expected type.
 
 ```ts
 type suit =
-  | _<_.expect<Array<number>, _.toInclude<number>>>
-  | _<_.expect<Array<number | string>, _.toInclude<number>>>
-  | _<_.expect<number[], _.toInclude<number>>>
-  | _<_.expect<[number], _.toInclude<number>>>
-  | _<_.expect<[number, string], _.toInclude<number>>>
-  | _<_.expect<[number, string], _.not.toInclude<number | string | boolean>>>;
+  | _<expect<Array<number>, to.include<number>>>
+  | _<expect<Array<number | string>, to.include<number>>>
+  | _<expect<number[], to.include<number>>>
+  | _<expect<[number], to.include<number>>>
+  | _<expect<[number, string], to.include<number>>>
+  | _<expect<[number, string], to.not.include<number | string | boolean>>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toReturn< expected >`
+## # `to.returnType< expected >`
 
 Given is a function whose return type should be assignable to the expected type.
 
 ```ts
 type suit =
-  | _<_.expect<() => number | string, _.toReturn<number>>>
-  | _<_.expect<() => void, _.toReturn<void>>>
-  | _<_.expect<() => void, _.toReturn<undefined>>>
-  | _<_.expect<() => Promise<"a">, _.toReturn<Promise<any>>>>
-  | _<_.expect<() => number[], _.toReturn<Array<number>>>>
-  | _<_.expect<() => number, _.not.toReturn<string>>>
-  | _<_.expect<() => 1, _.not.toReturn<number>>>;
+  | _<expect<() => number | string, to.returnType<number>>>
+  | _<expect<() => void, to.returnType<void>>>
+  | _<expect<() => void, to.returnType<undefined>>>
+  | _<expect<() => Promise<"a">, to.returnType<Promise<any>>>>
+  | _<expect<() => number[], to.returnType<Array<number>>>>
+  | _<expect<() => number, to.not.return<string>>>
+  | _<expect<() => 1, to.not.return<number>>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toReturnOnly< expected >`
+## # `to.returnTypeOnly< expected >`
 
 Given is a function whose return type should strictly equal to the expected type, meaning they both should be assignable to each other.
 
 ```ts
 type suit =
-  | _<_.expect<() => number | string, _.toReturnOnly<number | string>>>
-  | _<_.expect<() => number | string, _.not.toReturnOnly<number>>>
-  | _<_.expect<() => void, _.toReturnOnly<void>>>
-  | _<_.expect<() => number[], _.toReturnOnly<Array<number>>>>
-  | _<_.expect<() => number, _.not.toReturnOnly<string>>>
-  | _<_.expect<() => 1, _.not.toReturnOnly<number>>>;
+  | _<expect<() => number | string, to.returnTypeOnly<number | string>>>
+  | _<expect<() => number | string, to.not.returnOnly<number>>>
+  | _<expect<() => void, to.returnTypeOnly<void>>>
+  | _<expect<() => number[], to.returnTypeOnly<Array<number>>>>
+  | _<expect<() => number, to.not.returnOnly<string>>>
+  | _<expect<() => 1, to.not.returnOnly<number>>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toResolveTo< expected >`
+## # `to.resolveTo< expected >`
 
 Given is a function whose return type is a promise that resolves to the expected type.
 
 ```ts
 type suit =
-  | _<_.expect<() => Promise<void>, _.toResolveTo<undefined>>>
-  | _<_.expect<() => Promise<number>, _.toResolveTo<number>>>
-  | _<_.expect<() => Promise<number | string | boolean>, _.toResolveTo<number | string>>>
-  | _<_.expect<() => Promise<1>, _.not.toResolveTo<number>>>
-  | _<_.expect<() => Promise<number>, _.not.toResolveTo<number | string>>>
-  | _<_.expect<() => Promise<Promise<string>>, _.not.toResolveTo<string>>>;
+  | _<expect<() => Promise<void>, to.resolveTo<undefined>>>
+  | _<expect<() => Promise<number>, to.resolveTo<number>>>
+  | _<expect<() => Promise<number | string | boolean>, to.resolveTo<number | string>>>
+  | _<expect<() => Promise<1>, to.not.resolveTo<number>>>
+  | _<expect<() => Promise<number>, to.not.resolveTo<number | string>>>
+  | _<expect<() => Promise<Promise<string>>, to.not.resolveTo<string>>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toResolveToOnly< expected >`
+## # `to.resolveToOnly< expected >`
 
 Given is a function whose return type is a promise that resolves exactly to the expected type, meaning they both should be assignable to each other.
 
 ```ts
 type suit =
-  | _<_.expect<() => Promise<void>, _.toResolveToOnly<void>>>
-  | _<_.expect<() => Promise<number>, _.toResolveToOnly<number>>>
-  | _<_.expect<() => Promise<void>, _.not.toResolveToOnly<undefined>>>
-  | _<_.expect<() => Promise<number | string>, _.not.toResolveToOnly<number>>>
-  | _<_.expect<() => Promise<number>, _.not.toResolveToOnly<number | string>>>
-  | _<_.expect<() => Promise<number>, _.not.toResolveToOnly<1>>>;
+  | _<expect<() => Promise<void>, to.resolveToOnly<void>>>
+  | _<expect<() => Promise<number>, to.resolveToOnly<number>>>
+  | _<expect<() => Promise<void>, to.not.resolveToOnly<undefined>>>
+  | _<expect<() => Promise<number | string>, to.not.resolveToOnly<number>>>
+  | _<expect<() => Promise<number>, to.not.resolveToOnly<number | string>>>
+  | _<expect<() => Promise<number>, to.not.resolveToOnly<1>>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toAcceptParameters< expected >`
+## # `to.acceptParameters< expected >`
 
 Given is a function whose parameters can accept expected type.
 
 ```ts
 type suit =
-  | _<_.expect<() => void, _.toAcceptParameters<[]>>>
-  | _<_.expect<(a: string) => void, _.toAcceptParameters<[string]>>>
-  | _<_.expect<(a: string | number) => void, _.toAcceptParameters<[string]>>>
-  | _<_.expect<(a: string | number) => void, _.toAcceptParameters<[string | number]>>>
-  | _<_.expect<(a: string, b: number) => void, _.toAcceptParameters<[string, number]>>>
-  | _<_.expect<(a: "a") => void, _.not.toAcceptParameters<[string]>>>;
+  | _<expect<() => void, to.acceptParameters<[]>>>
+  | _<expect<(a: string) => void, to.acceptParameters<[string]>>>
+  | _<expect<(a: string | number) => void, to.acceptParameters<[string]>>>
+  | _<expect<(a: string | number) => void, to.acceptParameters<[string | number]>>>
+  | _<expect<(a: string, b: number) => void, to.acceptParameters<[string, number]>>>
+  | _<expect<(a: "a") => void, to.not.acceptParameters<[string]>>>;
 ```
 
 [↥ To the listing](#api)
 
-## # `_.toAcceptOnlyParameters< expected >`
+## # `to.acceptOnlyParameters< expected >`
 
 Given is a function whose parameters can accept only expected type. Pay attention to optional parameters! Function with optional parameters resolves its parameters to a tuple with optional elements, and they are not strictly compatible with similar const arrays.
 
 ```ts
 type suit =
-  | _<_.expect<() => void, _.toAcceptOnlyParameters<[]>>>
-  | _<_.expect<(a: string) => void, _.toAcceptOnlyParameters<[string]>>>
-  | _<_.expect<(a: string | number) => void, _.not.toAcceptOnlyParameters<[string]>>>;
+  | _<expect<() => void, to.acceptOnlyParameters<[]>>>
+  | _<expect<(a: string) => void, to.acceptOnlyParameters<[string]>>>
+  | _<expect<(a: string | number) => void, to.not.acceptOnlyParameters<[string]>>>;
 
 type Fn = (a: string, b?: number) => void; // parameters resolve to `[a: string, b?: number | undefined]`
 type suit2 =
   // Pay attention! This test fails:
-  | _.fail<_.expect<Fn, _.toAcceptOnlyParameters<[string, number | undefined]>>>
+  | _.fail<expect<Fn, to.acceptOnlyParameters<[string, number | undefined]>>>
   // This one passes:
-  | _.pass<_.expect<Fn, _.toAcceptOnlyParameters<[a: string, b?: number | undefined]>>>;
+  | _.pass<expect<Fn, to.acceptOnlyParameters<[a: string, b?: number | undefined]>>>;
 ```
 
 [↥ To the listing](#api)

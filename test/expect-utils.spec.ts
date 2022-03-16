@@ -56,6 +56,10 @@ type suit_assertNever =
     // @ts-expect-error
     | $.assertNever<void>
     // @ts-expect-error
+    | $.assertNever<number>
+    // @ts-expect-error
+    | $.assertNever<() => {}>
+    // @ts-expect-error
     | $.assertNever<string>;
 
 // ------ LOGICAL ------

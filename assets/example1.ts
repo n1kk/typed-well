@@ -1,25 +1,25 @@
-import { _ } from "typed-well";
+import { _, expect, to } from "typed-well"; // "typed-well"
 
 export type EventHandler = (type: string, data?: any) => boolean;
 
 type test_suit =
     | "you can write test descriptions/notes as strings"
-    | _<_.expect<EventHandler, _.toBeInvocable>>
-    | _<_.expect<EventHandler, _.toBeAssignableTo<Function>>>
-    | _<_.expect<EventHandler, _.toReturn<boolean>>>
-    | _<_.expect<ReturnType<EventHandler>, _.toBe<boolean>>>
+    | _<expect<EventHandler, to.beInvocable>>
+    | _<expect<EventHandler, to.beAssignableTo<Function>>>
+    | _<expect<EventHandler, to.returnType<boolean>>>
+    | _<expect<ReturnType<EventHandler>, to.be<boolean>>>
     // or as comments, whatever suits your style
-    | _<_.expect<EventHandler, _.toAcceptParameters<[string]>>>
-    | _<_.expect<Parameters<EventHandler>, _.toAccept<[string, object]>>>
+    | _<expect<EventHandler, to.acceptParameters<[string]>>>
+    | _<expect<Parameters<EventHandler>, to.accept<[string, object]>>>
     | `you can explicitly state if you expect test to pass or fail`
-    | _.pass<_.expect<EventHandler, _.toAcceptParameters<[string, undefined]>>>
-    | _.fail<_.expect<EventHandler, _.toAcceptParameters<[symbol]>>>
+    | _.pass<expect<EventHandler, to.acceptParameters<[string, undefined]>>>
+    | _.fail<expect<EventHandler, to.acceptParameters<[symbol]>>>
     | "your IDE will highlight tests that do not pass"
-    // | _<_.expect<EventHandler, _.toReturn<number>>>
-    // | _<_.expect<EventHandler, _.toReturn<string>>>
-    | `negative checks available via " _.not" namespace`
-    | _<_.expect<EventHandler, _.not.toReturn<void | undefined>>>
-    | _<_.expect<EventHandler, _.not.toBeAssignableTo<symbol>>>
+    | _<expect<EventHandler, to.returnType<number>>>
+    | _<expect<EventHandler, to.returnType<string>>>
+    | `negative checks available via " to.not" namespace`
+    | _<expect<EventHandler, to.not.returnType<void | undefined>>>
+    | _<expect<EventHandler, to.not.beAssignableTo<symbol>>>
     | `or use "_.fail" assert`
-    | _.fail<_.expect<EventHandler, _.toReturn<void | undefined>>>
-    | _.fail<_.expect<EventHandler, _.toBeAssignableTo<symbol>>>;
+    | _.fail<expect<EventHandler, to.returnType<void | undefined>>>
+    | _.fail<expect<EventHandler, to.beAssignableTo<symbol>>>;

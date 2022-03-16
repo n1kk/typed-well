@@ -3,12 +3,12 @@ lockfileVersion: 5.3
 specifiers:
   prettier: ^2.3.2
   rimraf: ^3.0.2
-  typescript: ^4.4.3
+  typescript: ^4.6.2
 
 devDependencies:
   prettier: 2.3.2
   rimraf: 3.0.2
-  typescript: 4.4.3
+  typescript: 4.6.2
 
 packages:
 
@@ -83,8 +83,8 @@ packages:
       glob: 7.2.0
     dev: true
 
-  /typescript/4.4.3:
-    resolution: {integrity: sha512-4xfscpisVgqqDfPaJo5vkd+Qd/ItkoagnHpufr+i2QCHBsNYp+G7UAoyFl8aPtx879u38wPV65rZ8qbGZijalA==}
+  /typescript/4.6.2:
+    resolution: {integrity: sha512-HM/hFigTBHZhLXshn9sN37H085+hQGeJHJ/X7LpBWLID/fbc2acUMfU+lGD98X81sKP+pFa9f0DZmCwB9GnbAg==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
