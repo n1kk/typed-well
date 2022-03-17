@@ -1,6 +1,6 @@
 {
   "name": "typed-well",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A unit testing library for your TypeScript definitions.",
   "author": "n1kk",
   "main": "src/index.ts",
